@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ferramentas OSINT</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #eee;
+      padding: 20px;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    h2 {
+      color: #00bcd4;
+      margin-top: 30px;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a[title] {
+      border-bottom: 1px dotted #4CAF50;
+      cursor: help;
+    }
+    .voltar {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🕵️ Ferramentas OSINT</h1>
+
+  <h2>🔎 Busca de Usuários em Plataformas</h2>
+  <ul>
+    <li><a href="https://github.com/sherlock-project/sherlock" target="_blank" title="Pesquisa usernames em mais de 300 sites">Sherlock</a></li>
+    <li><a href="https://whatsmyname.app" target="_blank" title="Verifica onde um nome de usuário está registrado">What's My Name</a></li>
+    <li><a href="https://commentpicker.com/instagram-username.php" target="_blank" title="Extrai o nome de usuário de URLs do Instagram">Instagram Username Finder</a></li>
+    <li><a href="https://commentpicker.com/instagram-user-id.php" target="_blank" title="Converte usernames do Instagram em IDs numéricos">Instagram User ID Finder</a></li>
+    <li><a href="https://instanonimo.com/pt" target="_blank" title="Permite visualizar stories e perfis públicos de forma anônima">Instanônimo</a></li>
+    <li><a href="osint/Socket Puppet.html" title="Ferramenta para teste de interações com sockets e captura de pacotes">Socket Puppet</a></li>
+  </ul>
+
+  <h2>🌍 Pesquisa por Endereço IP / Localização</h2>
+  <ul>
+    <li><a href="https://ipinfo.io" target="_blank" title="Localização e informações sobre IPs">IPInfo</a></li>
+    <li><a href="https://www.shodan.io" target="_blank" title="Busca dispositivos conectados à internet">Shodan</a></li>
+    <li><a href="https://greynoise.io" target="_blank" title="Detecta comportamento de IPs em massa">GreyNoise</a></li>
+  </ul>
+
+  <h2>🧠 Busca de Dados Públicos e Pessoas</h2>
+  <ul>
+    <li><a href="https://www.spokeo.com/" target="_blank" title="Busca dados públicos de cidadãos dos EUA">Spokeo</a></li>
+    <li><a href="https://pimeyes.com" target="_blank" title="Reconhecimento facial reverso">PimEyes</a></li>
+    <li><a href="https://webmii.com" target="_blank" title="Busca por nomes em fontes públicas e redes sociais">Webmii</a></li>
+    <li><a href="https://tudosobretodos.info/39054949813" target="_blank" title="Plataforma brasileira de busca de dados pessoais">Tudo Sobre Todos</a></li>
+    <li><a href="https://donodozap.com/" target="_blank" title="Verifica de quem é o número do WhatsApp">Dono do Zap</a></li>
+    <li><a href="https://osint.rocks/" target="_blank" title="Ferramentas e serviços de busca OSINT em dados brasileiros">OSINT Rocks</a></li>
+    <li><a href="https://www.osintcombine.com/tools" target="_blank" title="Ferramentas OSINT desenvolvidas pela OSINT Combine">OSINT Combine Tools</a></li>
+    <li><a href="https://www.aware-online.com/en/osint-tools/people-tools/" target="_blank" title="Coleção de ferramentas para investigação de pessoas">Aware Online - People Tools</a></li>
+  </ul>
+
+  <h2>📸 Análise de Imagens e Metadados</h2>
+  <ul>
+    <li><a href="https://fotoforensics.com" target="_blank" title="Análise de metadados e ELA de imagens">FotoForensics</a></li>
+    <li><a href="https://www.metadata2go.com/" target="_blank" title="Extrai metadados de arquivos enviados">Metadata2Go</a></li>
+  </ul>
+
+  <h2>🧩 Busca em Vazamentos</h2>
+  <ul>
+    <li><a href="https://haveibeenpwned.com" target="_blank" title="Verifica se seu e-mail foi exposto em vazamentos">Have I Been Pwned</a></li>
+    <li><a href="https://dehashed.com" target="_blank" title="Banco de dados de leaks com busca por e-mail, IP, usuário">Dehashed</a></li>
+    <li><a href="https://intelx.io" target="_blank" title="Busca profunda em bancos de dados vazados, onion e clear web">IntelX</a></li>
+  </ul>
+
+  <h2>📞 Consulta de Telefones e Dados Oficiais</h2>
+  <ul>
+    <li><a href="https://consultanumero.abrtelecom.com.br/consultanumero/consulta/consultaSituacaoAtualCtg" target="_blank" title="Consulta oficial da operadora do número de telefone">Consulta Número - ABR Telecom</a></li>
+    <li><a href="https://www.tse.jus.br/servicos-eleitorais/autoatendimento-eleitoral#/atendimento-eleitor" target="_blank" title="Consulta e serviços do TSE - Título, local de votação e mais">TSE - Autoatendimento Eleitoral</a></li>
+  </ul>
+
+  <h2>🔗 Agregadores e Frameworks</h2>
+  <ul>
+    <li><a href="https://osintframework.com" target="_blank" title="Mapa de ferramentas OSINT dividido por categorias">OSINT Framework</a></li>
+    <li><a href="https://start.me/p/DPYpmE/osint" target="_blank" title="Agregador de links úteis para OSINT e investigação">Start.me OSINT</a></li>
+  </ul>
+
+  <div class="voltar">
+    <a href="../index.html">← Voltar à página inicial</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canais de Aplicação da Lei - Investigação Digital</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+          --background-color: #f8f9fa; --card-color: #ffffff; --border-color: #e9ecef;
+          --text-color: #212529; --muted-text-color: #6c757d; --accent-color: #0d6efd;
+          --warning-color: #fff3cd; --warning-border-color: #ffe69c; --warning-text-color: #664d03;
+          --shadow-color: rgba(0, 0, 0, 0.05); --font-primary: 'Poppins', sans-serif;
+        }
+        body { background-color: var(--background-color); color: var(--text-color); font-family: var(--font-primary); margin: 0; padding: 2rem; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 900px; width: 100%; }
+        h1 { font-size: 2.8rem; font-weight: 700; color: var(--text-color); text-align: center; margin-bottom: 1rem; }
+        h2 { font-size: 1.8rem; text-align: left; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; margin-top: 2.5rem; }
+        p.subtitle { text-align: center; font-size: 1.1rem; color: var(--muted-text-color); margin-bottom: 2rem; }
+        .disclaimer-card { background-color: var(--warning-color); border: 1px solid var(--warning-border-color); color: var(--warning-text-color); padding: 1.5rem; border-radius: 12px; margin-bottom: 3rem; text-align: left; }
+        .disclaimer-card strong { display: block; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .tool-card { background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-decoration: none; color: var(--text-color); display: flex; flex-direction: column; box-shadow: 0 4px 15px var(--shadow-color); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        a.tool-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .card-header .icon { font-size: 2.2rem; width: 40px; text-align: center; }
+        .card-header .title { font-size: 1.3rem; font-weight: 600; }
+        .card-description { font-size: 0.95rem; color: var(--muted-text-color); line-height: 1.6; flex-grow: 1; }
+        .copy-btn { padding: 5px 10px; font-size: 0.8rem; background-color: var(--muted-text-color); color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .voltar-container { text-align: center; margin-top: 3rem; }
+        .btn-voltar { display: inline-block; background-color: var(--muted-text-color); color: #ffffff; padding: 0.8rem 1.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <h1⚖️ Canais de Aplicação da Lei</h1>
+        <p class="subtitle">Diretório de portais e diretrizes para solicitações de dados por autoridades competentes.</p>
+
+        <div class="disclaimer-card">
+            <strong>AVISO IMPORTANTE: USO RESTRITO</strong>
+            <p style="margin: 0; color: var(--warning-text-color);">Esta página destina-se exclusivamente a agentes de aplicação da lei e autoridades judiciais. Todas as solicitações de dados devem ser feitas em conformidade com a legislação vigente e, na maioria dos casos, exigem uma ordem judicial válida.</p>
+        </div>
+
+        <section>
+            <h2>Big Techs e Redes Sociais</h2>
+            <div class="grid-container">
+                <a href="https://lers.google.com/signup_v2/landing" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-google" style="color: #4285F4;"></i><span class="title">Google</span></div>
+                    <p class="card-description">Portal LERS para solicitar dados de contas Google, Gmail, YouTube, Android, Drive, etc.</p>
+                </a>
+                <a href="https://pt-br.facebook.com/records/login/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-meta" style="color: #1877F2;"></i><span class="title">Meta</span></div>
+                    <p class="card-description">Portal unificado para solicitações de dados do Facebook e Instagram.</p>
+                </a>
+                <a href="https://www.whatsapp.com/records/login/?locale=pt_BR" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-whatsapp" style="color: #25D366;"></i><span class="title">WhatsApp</span></div>
+                    <p class="card-description">Portal de solicitações do WhatsApp para autoridades (limitado a metadados).</p>
+                </a>
+                <a href="https://leportal.microsoft.com/home" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-microsoft" style="color: #00A4EF;"></i><span class="title">Microsoft</span></div>
+                    <p class="card-description">Canal para solicitar informações de contas Microsoft (Outlook, Skype, OneDrive).</p>
+                </a>
+                <div class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-apple" style="color: #000;"></i><span class="title">Apple</span></div>
+                    <p class="card-description">As solicitações devem ser enviadas por e-mail para <code>lawenforcement@apple.com</code>.</p>
+                    <button class="copy-btn" data-copy="lawenforcement@apple.com">Copiar E-mail</button>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>E-commerce e Transportes</h2>
+            <div class="grid-container">
+                <div class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-box-open" style="color: #FFE600;"></i><span class="title">Mercado Livre</span></div>
+                    <p class="card-description">As solicitações devem ser feitas via ofício encaminhado para o e-mail: <code>oficios@mercadolivre.com</code>.</p>
+                    <button class="copy-btn" data-copy="oficios@mercadolivre.com">Copiar E-mail</button>
+                </div>
+                <a href="https://lert.uber.com/s/?language=pt_BR" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-uber" style="color: #000;"></i><span class="title">Uber</span></div>
+                    <p class="card-description">Portal LERT da Uber para solicitar dados de viagens, cadastros de usuários e motoristas.</p>
+                </a>
+                <a href="https://99app.com/portal-das-autoridades/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-taxi" style="color: #FFC107;"></i><span class="title">99 App</span></div>
+                    <p class="card-description">Portal das Autoridades da 99 para recebimento de solicitações judiciais e extrajudiciais.</p>
+                </a>
+                <a href="https://sira.ifood.com.br/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-utensils" style="color: #EA1D2C;"></i><span class="title">iFood</span></div>
+                    <p class="card-description">SIRA (Sistema iFood de Resposta a Autoridades), canal oficial para recebimento de ofícios.</p>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Serviços Financeiros e Bancos</h2>
+            <div class="grid-container">
+                <a href="https://www.gov.br/coaf/pt-br/sistemas/sei-c" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-file-invoice-dollar" style="color: #004225;"></i><span class="title">COAF - RIF</span></div>
+                    <p class="card-description">O RIF (Relatório de Inteligência Financeira) auxilia na prevenção à lavagem de dinheiro.</p>
+                </a>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-building-columns" style="color: #0033A0;"></i><span class="title">Banco do Brasil</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-building-columns" style="color: #007856;"></i><span class="title">Caixa</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-building-columns" style="color: #EC7000;"></i><span class="title">Itaú</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-building-columns" style="color: #CC092F;"></i><span class="title">Bradesco</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-building-columns" style="color: #C8191E;"></i><span class="title">Santander</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-n" style="color: #820AD1;"></i><span class="title">Nubank</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-i" style="color: #FF7A00;"></i><span class="title">Banco Inter</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-c" style="color: #000;"></i><span class="title">C6 Bank</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-p" style="color: #21C25E;"></i><span class="title">PicPay</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-n" style="color: #FF7A00;"></i><span class="title">Next</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-p" style="color: #00A5B4;"></i><span class="title">Banco Pan</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+                <div class="tool-card"><div class="card-header"><i class="icon fa-solid fa-s" style="color: #00963F;"></i><span class="title">Sicob</span></div><p class="card-description">Solicitações via ofício judicial direcionado ao departamento jurídico/segurança.</p></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Corretoras de Criptomoedas</h2>
+            <div class="grid-container">
+                <a href="https://www.binance.com/pt-BR/support/law-enforcement" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-bitcoin-sign" style="color: #F0B90B;"></i><span class="title">Binance</span></div>
+                    <p class="card-description">Guia oficial da Binance para autoridades policiais, explicando como solicitar informações de contas e transações.</p>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Operadoras de Telecomunicações</h2>
+            <div class="grid-container">
+                 <a href="https://portaljud.vivo.com.br/portaljud/login.jsf" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-v" style="color: #660099;"></i><span class="title">Vivo</span></div>
+                    <p class="card-description">Portal Jud da Vivo para atendimento de solicitações do Poder Judiciário e outras autoridades.</p>
+                </a>
+                <a href="https://vigia.claro.com.br/login" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-c" style="color: #E3262E;"></i><span class="title">Claro - Vigia</span></div>
+                    <p class="card-description">Sistema Vigia da Claro, plataforma para gestão de solicitações de quebra de sigilo e dados.</p>
+                </a>
+                <a href="https://poarg.timbrasil.com.br/login" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-t" style="color: #007EC5;"></i><span class="title">TIM - Vigia</span></div>
+                    <p class="card-description">Sistema Vigia da TIM, plataforma para gestão de solicitações de quebra de sigilo e dados.</p>
+                </a>
+            </div>
+        </section>
+
+        <div class="voltar-container">
+            <a href="https://combatcop.github.io/investigadigital/" class="btn-voltar">← Voltar à Página Inicial</a>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('copy-btn')) {
+                const textToCopy = event.target.dataset.copy;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    alert(`E-mail copiado: ${textToCopy}`);
+                }).catch(err => {
+                    console.error('Erro ao copiar e-mail: ', err);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

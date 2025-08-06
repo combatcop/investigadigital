@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas de Inteligência Artificial - Investigação Digital</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+          --background-color: #f8f9fa; --card-color: #ffffff; --border-color: #e9ecef;
+          --text-color: #212529; --muted-text-color: #6c757d; --accent-color: #0d6efd;
+          --shadow-color: rgba(0, 0, 0, 0.05); --font-primary: 'Poppins', sans-serif;
+        }
+        body { background-color: var(--background-color); color: var(--text-color); font-family: var(--font-primary); margin: 0; padding: 2rem; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 900px; width: 100%; }
+        h1 { font-size: 2.8rem; font-weight: 700; color: var(--text-color); text-align: center; margin-bottom: 1rem; }
+        h2 { font-size: 1.8rem; text-align: left; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; margin-top: 2.5rem; }
+        p.subtitle { text-align: center; font-size: 1.1rem; color: var(--muted-text-color); margin-bottom: 3rem; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .tool-card {
+            background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 1.5rem; text-decoration: none; color: var(--text-color);
+            display: flex; flex-direction: column; box-shadow: 0 4px 15px var(--shadow-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .card-header .emoji { font-size: 2.5rem; }
+        .card-header .title { font-size: 1.3rem; font-weight: 600; }
+        .card-description { font-size: 0.95rem; color: var(--muted-text-color); line-height: 1.6; flex-grow: 1; }
+        .voltar-container { text-align: center; margin-top: 3rem; }
+        .btn-voltar { display: inline-block; background-color: var(--muted-text-color); color: #ffffff; padding: 0.8rem 1.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <h1>🤖 Ferramentas de Inteligência Artificial</h1>
+        <p class="subtitle">Plataformas e recursos de IA para auxiliar em investigações, análises e automação de tarefas.</p>
+
+        <section>
+            <h2>Plataformas de IA</h2>
+            <div class="grid-container">
+                <a href="https://chatgpt.com/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">💬</span>
+                        <span class="title">ChatGPT</span>
+                    </div>
+                    <p class="card-description">Modelo de linguagem da OpenAI, ideal para geração de texto, resumo, tradução e programação. Ótimo para criar relatórios e histórias de cobertura.</p>
+                </a>
+                <a href="https://gemini.google.com/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">✨</span>
+                        <span class="title">Gemini</span>
+                    </div>
+                    <p class="card-description">A IA multimodal do Google. Excelente em análise de texto, imagens e dados. Conectado em tempo real com a busca Google para informações atualizadas.</p>
+                </a>
+                 <a href="https://copilot.microsoft.com/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">💻</span>
+                        <span class="title">Microsoft Copilot</span>
+                    </div>
+                    <p class="card-description">A assistente de IA da Microsoft, integrada ao Bing. Combina o poder de modelos como o GPT-4 com acesso em tempo real à web para respostas e criação de imagens.</p>
+                </a>
+                <a href="https://www.perplexity.ai/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">🌐</span>
+                        <span class="title">Perplexity AI</span>
+                    </div>
+                    <p class="card-description">Um "motor de respostas" que combina IA com busca na web, fornecendo respostas precisas e citando as fontes. Muito útil para pesquisa e verificação de fatos.</p>
+                </a>
+                <a href="https://notebooklm.google.com/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">📒</span>
+                        <span class="title">NotebookLM</span>
+                    </div>
+                    <p class="card-description">Sua central de pesquisa pessoal do Google. Faça upload de documentos (PDFs, textos) e a IA responde perguntas baseada exclusivamente nas suas fontes.</p>
+                </a>
+                <a href="https://app.gladia.io/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">🔊</span>
+                        <span class="title">Gladia</span>
+                    </div>
+                    <p class="card-description">Plataforma de IA especializada em áudio. Oferece serviços de transcrição de alta precisão, tradução de áudio e outras análises de fala.</p>
+                </a>
+                <a href="https://aistudio.google.com/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">🛠️</span>
+                        <span class="title">Google AI Studio</span>
+                    </div>
+                    <p class="card-description">Plataforma para desenvolvedores experimentarem e criarem com os modelos do Google (Gemini). É aqui que você gera sua chave de API para outras ferramentas.</p>
+                </a>
+                <a href="https://grok.x.ai/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">🚀</span>
+                        <span class="title">Grok</span>
+                    </div>
+                    <p class="card-description">A IA da xAI (Elon Musk), integrada à plataforma X (Twitter). Destaca-se pelo acesso a informações em tempo real e por um tom de resposta mais direto.</p>
+                </a>
+                <a href="https://claude.ai/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">🧠</span>
+                        <span class="title">Claude</span>
+                    </div>
+                    <p class="card-description">Modelo de IA da Anthropic, focado em segurança e conversas mais naturais. Ótimo para tarefas que exigem raciocínio complexo e contextos longos.</p>
+                </a>
+                 <a href="https://www.deepseek.com/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">🔍</span>
+                        <span class="title">DeepSeek</span>
+                    </div>
+                    <p class="card-description">Plataforma com foco em modelos de linguagem e código. Oferece um chatbot e modelos abertos com forte capacidade de programação e raciocínio lógico.</p>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Links Úteis</h2>
+            <div class="grid-container">
+                <a href="prompts.html" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">📜</span>
+                        <span class="title">Prompts</span>
+                    </div>
+                    <p class="card-description">Uma coleção de prompts (instruções) prontos e otimizados para tarefas de investigação, análise de dados e geração de relatórios.</p>
+                </a>
+                <a href="agentes-ia.html" class="tool-card">
+                    <div class="card-header">
+                        <span class="emoji">🤖</span>
+                        <span class="title">Agentes de IA Especializados</span>
+                    </div>
+                    <p class="card-description">IAs autônomas capazes de realizar pesquisas, analisar dados e executar tarefas complexas com um único objetivo, otimizando o fluxo de trabalho investigativo.</p>
+                </a>
+            </div>
+        </section>
+
+        <div class="voltar-container">
+            <a href="https://combatcop.github.io/investigadigital/" class="btn-voltar">← Voltar à Página Inicial</a>
+        </div>
+    </main>
+
+</body>
+</html>

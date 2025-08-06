@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramenta de Transcrição de Áudios</title>
+    <style>
+        /* Estilos CSS (sem alterações da v2.7) */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f8f9fa; color: #343a40; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); text-align: center; width: 95%; max-width: 800px; }
+        h1 { color: #1a73e8; margin-bottom: 10px; }
+        .subtitle { font-size: 16px; font-weight: 500; color: #5f6368; margin-top: 0; margin-bottom: 35px; }
+        p { color: #5f6368; margin-bottom: 30px; line-height: 1.6; }
+        .api-key-wrapper { display: flex; align-items: center; gap: 8px; margin-bottom: 25px; }
+        #apiKeyInput { flex-grow: 1; margin-bottom: 0; }
+        .paste-btn { padding: 10px 12px; font-size: 18px; background-color: #e9ecef; border: 1px solid #dee2e6; border-radius: 8px; cursor: pointer; }
+        #apiKeyStatus { font-size: 20px; min-width: 25px; }
+        .status-ok { color: #28a745; }
+        .status-error { color: #dc3545; }
+        .button { color: white; padding: 14px 28px; border-radius: 8px; cursor: pointer; display: inline-block; font-weight: bold; transition: all 0.2s; border: none; font-size: 16px; margin: 5px; }
+        .button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .button:disabled { background-color: #adb5bd; cursor: not-allowed; }
+        .file-label { background-color: #1a73e8; }
+        #startButton { background-color: #34a853; }
+        #pauseResumeButton { background-color: #ff9800; }
+        #stopButton { background-color: #d93025; }
+        #downloadReportButton { background-color: #fbbc05; color: #333; }
+        #liveReportContainer { margin-top: 20px; text-align: left; border: 1px solid #dee2e6; border-radius: 8px; padding: 10px 20px; max-height: 60vh; overflow-y: auto; background-color: #fdfdfd; }
+        .result-item { border-bottom: 1px solid #e9ecef; padding: 20px 5px; }
+        .result-item:last-child { border-bottom: none; }
+        .result-title { display: flex; align-items: center; font-weight: bold; font-size: 16px; margin-bottom: 12px; color: #343a40; }
+        .locate-btn { background: none; border: none; cursor: pointer; font-size: 20px; margin-left: 10px; padding: 0 5px; }
+        .locate-btn:hover { transform: scale(1.2); }
+        .audio-player { width: 100%; margin-bottom: 12px; }
+        .result-text { font-family: 'SF Mono', 'Courier New', monospace; font-size: 14px; white-space: pre-wrap; line-height: 1.7; color: #212529; padding: 8px; border: 1px solid transparent; border-radius: 6px; }
+        .result-text[contenteditable="true"]:focus { outline: none; border-color: #1a73e8; background-color: #f8f9fa; box-shadow: 0 0 5px rgba(26, 115, 232, 0.2); }
+        .manual-entry-btn { background-color: #ffc107; color: #333; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .manual-entry-placeholder { color: #6c757d; }
+        #status { margin-top: 25px; font-size: 16px; min-height: 50px; font-weight: 500; position: relative; }
+        #copy-notification { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); background-color: #28a745; color: white; padding: 5px 15px; border-radius: 15px; font-size: 12px; opacity: 0; transition: opacity 0.5s; }
+        #errorLogContainer { margin-top: 20px; }
+        #errorLog { min-height: 100px; color: #d93025; background-color: #fbe9e7; }
+        .hidden { display: none; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #1a73e8; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto 0; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ferramenta de Transcrição de Áudios</h1>
+        <p class="subtitle">Desenvolvido por Pedro Henrique - 2025</p>
+        <p>Transcreva, ouça, edite e adicione transcrições manuais. Clique no ícone de pasta (📁) para copiar o nome do arquivo e localizá-lo em seu computador.</p>
+        <div class="api-key-wrapper">
+            <input type="password" id="apiKeyInput" placeholder="Cole sua Chave de API do Google AI aqui">
+            <button class="paste-btn" id="pasteApiKeyButton" title="Colar Chave da Área de Transferência">&#128203;</button>
+            <span id="apiKeyStatus"></span>
+        </div>
+        <div>
+            <label for="fileInput" id="fileLabel" class="button file-label">Selecionar Arquivos (Máx: 200)</label>
+            <input type="file" id="fileInput" accept="audio/*" multiple class="hidden">
+        </div>
+        <div id="status">
+            <p id="file-count">&nbsp;</p>
+            <p id="status-message">Nenhum arquivo selecionado.</p>
+            <div id="copy-notification">Nome do arquivo copiado!</div>
+        </div>
+        <div id="controls">
+             <button id="startButton" class="button">Iniciar Transcrição</button>
+             <button id="pauseResumeButton" class="button hidden">Pausar</button>
+             <button id="stopButton" class="button hidden">Parar</button>
+        </div>
+        <div id="loader" class="loader hidden"></div>
+        <div id="resultsContainer" class="hidden">
+            <div id="liveReportContainer"></div>
+            <div id="errorLogContainer" class="hidden">
+                <h3>Log de Erros Detalhados:</h3>
+                <textarea id="errorLog" readonly></textarea>
+            </div>
+            <button id="downloadReportButton" class="button">Baixar Relatório Final</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+        
+        const MAX_FILES = 200;
+        const MAX_RETRIES = 3;
+        const API_KEY_LENGTH = 39;
+        const PLACEHOLDER_TEXT = "Digite a transcrição aqui...";
+
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const pasteApiKeyButton = document.getElementById('pasteApiKeyButton');
+        const apiKeyStatus = document.getElementById('apiKeyStatus');
+        const fileInput = document.getElementById('fileInput');
+        const fileCountP = document.getElementById('file-count');
+        const statusMessageP = document.getElementById('status-message');
+        const liveReportContainer = document.getElementById('liveReportContainer');
+        const startButton = document.getElementById('startButton');
+        const pauseResumeButton = document.getElementById('pauseResumeButton');
+        const stopButton = document.getElementById('stopButton');
+        const downloadReportButton = document.getElementById('downloadReportButton');
+        const loader = document.getElementById('loader');
+        const errorLogContainer = document.getElementById('errorLogContainer');
+        const errorLog = document.getElementById('errorLog');
+        const fileLabel = document.getElementById('fileLabel');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const copyNotification = document.getElementById('copy-notification');
+
+        let state = { files: [], apiKey: '', status: 'idle' };
+
+        // Funções de UI e auxiliares
+        function updateUI() { const canStart = state.files.length > 0 && !!state.apiKey && state.apiKey.length === API_KEY_LENGTH; loader.classList.add('hidden'); startButton.classList.add('hidden'); pauseResumeButton.classList.add('hidden'); stopButton.classList.add('hidden'); fileLabel.classList.remove('hidden'); startButton.disabled = !canStart; resultsContainer.classList.toggle('hidden', state.status === 'idle'); switch (state.status) { case 'idle': resultsContainer.classList.add('hidden'); startButton.classList.remove('hidden'); break; case 'stopped': case 'finished': startButton.classList.remove('hidden'); break; case 'running': fileLabel.classList.add('hidden'); pauseResumeButton.classList.remove('hidden'); pauseResumeButton.textContent = 'Pausar'; stopButton.classList.remove('hidden'); loader.classList.remove('hidden'); break; case 'paused': fileLabel.classList.add('hidden'); pauseResumeButton.classList.remove('hidden'); pauseResumeButton.textContent = 'Retomar'; stopButton.classList.remove('hidden'); break; } }
+        function updateStatus(message) { statusMessageP.innerHTML = message; }
+        async function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+        async function toBase64(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = () => resolve(reader.result.split(',')[1]); reader.onerror = error => reject(error); }); }
+        async function fileToGenerativePart(file) { const base64EncodedData = await toBase64(file); return { inlineData: { data: base64EncodedData, mimeType: file.type || 'audio/*' } }; }
+        async function countdown(seconds, processed, total) { for (let i = seconds; i > 0; i--) { while (state.status === 'paused') { updateStatus(`Processo Pausado na contagem... (${processed}/${total})`); await sleep(500); } if (state.status !== 'running') return; updateStatus(`Processando... (${processed}/${total}) - Próximo em ${i}s...`); await sleep(1000); } }
+        
+        // --- Event Handlers ---
+
+        // Lógica de eventos delegados para players e botões dinâmicos
+        liveReportContainer.addEventListener('click', (event) => { const target = event.target; if (target.classList.contains('locate-btn')) { const filename = target.dataset.filename; navigator.clipboard.writeText(filename).then(() => { copyNotification.style.opacity = '1'; setTimeout(() => { copyNotification.style.opacity = '0'; }, 2000); }).catch(err => console.error('Falha ao copiar:', err)); } if (target.classList.contains('manual-entry-btn')) { const parent = target.parentElement; parent.innerHTML = `<div class="result-text manual-entry-placeholder" contenteditable="true">${PLACEHOLDER_TEXT}</div>`; parent.querySelector('.result-text').focus(); } });
+        liveReportContainer.addEventListener('play', (event) => { const currentAudio = event.target; const allPlayers = liveReportContainer.querySelectorAll('audio'); allPlayers.forEach(player => { if (player !== currentAudio) { player.pause(); } }); }, true);
+        
+        // CORRIGIDO: Lógica para limpar placeholder da transcrição manual
+        liveReportContainer.addEventListener('focusin', (event) => {
+            const target = event.target;
+            if(target.classList.contains('manual-entry-placeholder') && target.textContent === PLACEHOLDER_TEXT) {
+                target.textContent = '';
+                target.classList.remove('manual-entry-placeholder');
+            }
+        });
+
+        liveReportContainer.addEventListener('focusout', (event) => {
+            const target = event.target;
+            if(target.hasAttribute('contenteditable') && target.textContent.trim() === '') {
+                target.textContent = PLACEHOLDER_TEXT;
+                target.classList.add('manual-entry-placeholder');
+            }
+        });
+
+        // Lógica para colar e validar a Chave de API
+        pasteApiKeyButton.addEventListener('click', async () => { try { const text = await navigator.clipboard.readText(); apiKeyInput.value = text; apiKeyInput.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) { console.error('Falha ao colar texto: ', err); updateStatus('Não foi possível ler da área de transferência.'); } });
+        apiKeyInput.addEventListener('input', () => { const key = apiKeyInput.value.trim(); state.apiKey = key; if (key.length === 0) { apiKeyStatus.innerHTML = ''; apiKeyStatus.className = ''; } else if (key.length === API_KEY_LENGTH) { apiKeyStatus.innerHTML = '&#10004;'; apiKeyStatus.className = 'status-ok'; } else { apiKeyStatus.innerHTML = '&#10006;'; apiKeyStatus.className = 'status-error'; } updateUI(); });
+        
+        // Lógica de seleção de arquivos
+        fileInput.addEventListener('change', (event) => { state.files.forEach(fileData => URL.revokeObjectURL(fileData.url)); const selectedFiles = Array.from(event.target.files); if (selectedFiles.length > MAX_FILES) { alert(`Limite excedido! Por favor, selecione no máximo ${MAX_FILES} arquivos.`); fileInput.value = ""; state.files = []; } else { state.files = selectedFiles.map((file, index) => ({ file: file, url: URL.createObjectURL(file), id: `file-${index}` })); } if (state.files.length > 0) { fileCountP.textContent = `${state.files.length} arquivo(s) selecionado(s).`; updateStatus('Pronto para iniciar.'); } else { fileCountP.innerHTML = '&nbsp;'; updateStatus('Nenhum arquivo selecionado.'); } state.status = 'idle'; liveReportContainer.innerHTML = ''; updateUI(); });
+        
+        // Demais listeners
+        window.addEventListener('beforeunload', () => { state.files.forEach(fileData => URL.revokeObjectURL(fileData.url)); });
+        pauseResumeButton.addEventListener('click', () => { if (state.status === 'running') { state.status = 'paused'; updateStatus('Processo Pausado.'); } else if (state.status === 'paused') { state.status = 'running'; updateStatus('Retomando...'); } updateUI(); });
+        stopButton.addEventListener('click', () => { state.status = 'stopped'; updateStatus('Processo interrompido pelo usuário.'); updateUI(); });
+        
+        // CORRIGIDO: Lógica de download para incluir o log de erros
+        downloadReportButton.addEventListener('click', () => {
+            let fullReport = "";
+            const resultItems = liveReportContainer.querySelectorAll('.result-item');
+            
+            resultItems.forEach(item => {
+                const filename = item.querySelector('.result-title-text').textContent;
+                const transcriptionDiv = item.querySelector('.result-text');
+                let transcription = '[TRANSCRIÇÃO NÃO DISPONÍVEL]'; // Padrão
+                
+                if(transcriptionDiv) {
+                    transcription = transcriptionDiv.textContent;
+                    if (transcriptionDiv.classList.contains('manual-entry-placeholder') && transcription === PLACEHOLDER_TEXT) {
+                        transcription = '[TRANSCRIÇÃO MANUAL NÃO INSERIDA]';
+                    }
+                }
+                fullReport += `--- INÍCIO: ${filename} ---\n${transcription}\n--- FIM: ${filename} ---\n\n`;
+            });
+            
+            const errorLogContent = errorLog.value.trim();
+            const errorReport = errorLogContent ? `\n\nLOG DE ERROS\n============\n\n${errorLogContent}` : '';
+            const finalContent = `RELATÓRIO DE TRANSCRIÇÃO\n=========================\n\n${fullReport}${errorReport}`;
+            
+            const blob = new Blob([finalContent], {type: 'text/plain;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+            a.href = url;
+            a.download = `RelatorioTranscricao_${date}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // --- Função Principal de Transcrição ---
+        startButton.addEventListener('click', async () => {
+            state.status = 'running';
+            updateUI();
+            liveReportContainer.innerHTML = '';
+            errorLog.value = '';
+            errorLogContainer.classList.add('hidden');
+            let errorContent = "";
+            let filesProcessed = 0;
+            fileCountP.innerHTML = '&nbsp;';
+
+            try {
+                const genAI = new GoogleGenerativeAI(state.apiKey);
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                updateStatus(`Iniciando transcrição... (0/${state.files.length})`);
+
+                for (const fileData of state.files) {
+                    if (state.status === 'stopped') { updateStatus('Processo interrompido.'); break; }
+                    while (state.status === 'paused') { await sleep(500); }
+
+                    let transcriptionText = '';
+                    let hasError = false;
+
+                    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+                        try {
+                            updateStatus(`Processando: ${fileData.file.name} (Tentativa ${attempt}/${MAX_RETRIES})`);
+                            const audioPart = await fileToGenerativePart(fileData.file);
+                            const prompt = "Transcreva este áudio na íntegra. Retorne apenas o texto transcrito.";
+                            const result = await model.generateContent([prompt, audioPart]);
+                            transcriptionText = result.response.text();
+                            hasError = false;
+                            break;
+                        } catch (error) {
+                            console.warn(`Tentativa ${attempt} falhou para ${fileData.file.name}:`, error);
+                            
+                            // CORRIGIDO: Detecção de erro de cota
+                            if (error.message && error.message.includes('exceeded your current quota')) {
+                                updateStatus('<strong>ERRO DE COTA:</strong> Sua chave de API excedeu a cota de uso. Por favor, troque a chave de API e tente novamente.');
+                                state.status = 'stopped';
+                                hasError = true; // Marca como erro para não processar mais
+                                break; // Sai do loop de retentativas
+                            }
+                            
+                            if (attempt === MAX_RETRIES) {
+                                hasError = true;
+                                const errorMessage = error.message ? error.message.replace(/\[.*?\]\s/g, '') : 'Erro desconhecido.';
+                                errorContent += `Arquivo: ${fileData.file.name}\nMotivo: ${errorMessage}\n\n`;
+                            } else {
+                                await sleep(2000);
+                            }
+                        }
+                    }
+                    
+                    if (hasError && state.status === 'stopped') break; // Se foi parado por erro de cota, sai do loop principal
+
+                    filesProcessed++;
+                    
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'result-item';
+                    resultDiv.id = fileData.id;
+
+                    let textHtml;
+                    if (hasError) {
+                        textHtml = `<div class="result-error"><button class="manual-entry-btn">Adicionar Transcrição Manual</button></div>`;
+                    } else {
+                        textHtml = `<div class="result-text" contenteditable="true">${transcriptionText}</div>`;
+                    }
+
+                    resultDiv.innerHTML = `
+                        <div class="result-title">
+                            <span class="result-title-text">${fileData.file.name}</span>
+                            <button class="locate-btn" data-filename="${fileData.file.name}" title="Copiar nome do arquivo">&#128193;</button>
+                        </div>
+                        <audio controls class="audio-player" src="${fileData.url}"></audio>
+                        ${textHtml}
+                    `;
+                    liveReportContainer.appendChild(resultDiv);
+                    liveReportContainer.scrollTop = liveReportContainer.scrollHeight;
+                    
+                    if (errorContent) {
+                        errorLogContainer.classList.remove('hidden');
+                        errorLog.value = errorContent;
+                    }
+                    
+                    if (state.status === 'running' && filesProcessed < state.files.length) {
+                        await countdown(4, filesProcessed, state.files.length);
+                    }
+                }
+            } catch (e) {
+                console.error("Erro na inicialização da API:", e);
+                updateStatus(`<strong>Erro Crítico:</strong> Não foi possível conectar à API. Verifique sua chave.`);
+                state.status = 'stopped';
+            }
+
+            if (state.status === 'running') {
+                state.status = 'finished';
+                updateStatus(`Processo concluído!`);
+                fileCountP.textContent = `${filesProcessed} de ${state.files.length} arquivos foram processados.`;
+            } else if (state.status === 'stopped') {
+                fileCountP.textContent = `Processo interrompido em ${filesProcessed}/${state.files.length} arquivos.`
+            }
+            updateUI();
+        });
+        
+        updateUI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Hash (SHA-256 & SHA-512) e Gerador de Relatório</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+          --background-color: #f8f9fa; --card-color: #ffffff; --border-color: #e9ecef;
+          --text-color: #212529; --muted-text-color: #6c757d; --accent-color: #0d6efd;
+          --success-color: #198754; --danger-color: #dc3545; --shadow-color: rgba(0, 0, 0, 0.05);
+          --font-primary: 'Poppins', sans-serif; --font-mono: 'Roboto Mono', monospace;
+        }
+        body { background-color: var(--background-color); color: var(--text-color); font-family: var(--font-primary); margin: 0; padding: 2rem; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 1000px; width: 100%; text-align: center; }
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        h2 { font-size: 1.8rem; text-align: left; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-top: 2rem; }
+        p { color: var(--muted-text-color); line-height: 1.6; text-align: left; }
+        .card { background-color: var(--card-color); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color); text-align: left; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; }
+        input[type="file"] { width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-family: var(--font-primary); font-size: 1rem; }
+        button { background-color: var(--accent-color); color: white; padding: 14px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.2s ease; }
+        button:hover:not(:disabled) { background-color: #0b5ed7; transform: translateY(-2px); }
+        button:disabled { background-color: #aaa; cursor: not-allowed; }
+        #resultsTable { width: 100%; border-collapse: collapse; margin-top: 1.5rem; table-layout: fixed; }
+        #resultsTable th, #resultsTable td { padding: 12px; border: 1px solid var(--border-color); text-align: left; }
+        #resultsTable th { background-color: #f8f9fa; }
+        #resultsTable td .hash { font-family: var(--font-mono); font-size: 0.9rem; word-break: break-all; display: block; margin-bottom: 5px; }
+        .copy-btn { padding: 5px 8px; font-size: 0.8rem; background-color: var(--muted-text-color); margin-left: 0; }
+        #progress-container { display: none; margin-top: 1rem; }
+        #progress-bar { width: 100%; background-color: #e9ecef; border-radius: 5px; }
+        #progress-bar-fill { width: 0%; height: 20px; background-color: var(--success-color); border-radius: 5px; transition: width 0.3s; }
+        #progress-text { margin-top: 5px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gerador de Relatório de Hash</h1>
+        <p style="text-align:center; font-size: 1.1rem;">Esta ferramenta calcula os resumos criptográficos <strong>SHA-256 e SHA-512</strong> de múltiplos arquivos para verificação de integridade e gera um relatório técnico em formato .txt.</p>
+
+        <div class="card">
+            <h2>1. Seleção de Arquivos</h2>
+            <form id="hash-form">
+                <label for="file-input">Selecione um ou mais arquivos:</label>
+                <input type="file" id="file-input" multiple required>
+                <button type="submit" id="calculate-btn">Calcular Hashes</button>
+            </form>
+        </div>
+
+        <div id="progress-container" class="card">
+            <label id="progress-text">Calculando...</label>
+            <div id="progress-bar"><div id="progress-bar-fill"></div></div>
+        </div>
+
+        <div id="results-container" class="card" style="display:none;">
+            <h2>2. Resultados</h2>
+            <div style="overflow-x:auto;">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Nome do Arquivo</th>
+                            <th style="width: 15%;">Tamanho</th>
+                            <th style="width: 30%;">Hash SHA-256</th>
+                            <th style="width: 30%;">Hash SHA-512</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+             <h2>3. Gerar Relatório</h2>
+             <p>Após o cálculo, o botão para download do relatório completo (.txt) será habilitado.</p>
+             <button id="download-btn" disabled>Download do Relatório (.txt)</button>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('hash-form');
+        const fileInput = document.getElementById('file-input');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const progressText = document.getElementById('progress-text');
+        const resultsContainer = document.getElementById('results-container');
+        const resultsTableBody = document.querySelector('#resultsTable tbody');
+        const downloadBtn = document.getElementById('download-btn');
+
+        let reportData = [];
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (fileInput.files.length === 0) {
+                alert('Por favor, selecione pelo menos um arquivo.');
+                return;
+            }
+
+            calculateBtn.disabled = true;
+            downloadBtn.disabled = true;
+            resultsTableBody.innerHTML = '';
+            resultsContainer.style.display = 'block';
+            progressContainer.style.display = 'block';
+            reportData = [];
+
+            const files = Array.from(fileInput.files);
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const progress = ((i + 1) / files.length) * 100;
+                
+                progressText.textContent = `Processando arquivo ${i + 1} de ${files.length}: ${file.name}`;
+                progressBarFill.style.width = `${progress}%`;
+
+                try {
+                    const [hashSha256, hashSha512] = await Promise.all([
+                        performHashCalculation(file, 'SHA-256'),
+                        performHashCalculation(file, 'SHA-512')
+                    ]);
+                    
+                    const fileInfo = {
+                        name: file.name,
+                        size: formatBytes(file.size),
+                        lastModified: new Date(file.lastModified).toLocaleString('pt-BR'),
+                        hash_sha256: hashSha256,
+                        hash_sha512: hashSha512,
+                    };
+
+                    reportData.push(fileInfo);
+                    displayResult(fileInfo);
+
+                } catch (error) {
+                    console.error('Erro ao calcular hash:', error);
+                    alert(`Não foi possível calcular o hash do arquivo ${file.name}.`);
+                }
+            }
+
+            progressText.textContent = 'Cálculo concluído!';
+            calculateBtn.disabled = false;
+            downloadBtn.disabled = false;
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const reportContent = generateReport();
+            const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `Relatorio_Hash_${new Date().toISOString().slice(0, 10)}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        });
+
+        function displayResult(fileInfo) {
+            const row = resultsTableBody.insertRow();
+            row.innerHTML = `
+                <td>${fileInfo.name}</td>
+                <td>${fileInfo.size}</td>
+                <td>
+                    <span class="hash">${fileInfo.hash_sha256}</span>
+                    <button class="copy-btn" data-hash="${fileInfo.hash_sha256}" title="Copiar SHA-256">Copiar</button>
+                </td>
+                <td>
+                    <span class="hash">${fileInfo.hash_sha512}</span>
+                    <button class="copy-btn" data-hash="${fileInfo.hash_sha512}" title="Copiar SHA-512">Copiar</button>
+                </td>
+            `;
+        }
+        
+        resultsTableBody.addEventListener('click', (event) => {
+            if (event.target.classList.contains('copy-btn')) {
+                const hashToCopy = event.target.dataset.hash;
+                navigator.clipboard.writeText(hashToCopy).then(() => {
+                    alert('Hash copiado!');
+                });
+            }
+        });
+
+        async function performHashCalculation(file, algorithm) {
+            const buffer = await file.arrayBuffer();
+            const hashBuffer = await crypto.subtle.digest(algorithm, buffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+        
+        function generateReport() {
+            const now = new Date();
+            
+            let content = `======================================================================\r\n`;
+            content += `        RELATÓRIO DE INTEGRIDADE DE ARQUIVOS (HASH)\r\n`;
+            content += `======================================================================\r\n\r\n`;
+            content += `Data e Hora de Geração: ${now.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}\r\n`;
+            content += `Algoritmos Utilizados: SHA-256 e SHA-512\r\n\r\n`;
+            
+            content += `----------------------------------------------------------------------\r\n`;
+            content += `                         METODOLOGIA\r\n`;
+            content += `----------------------------------------------------------------------\r\n`;
+            content += `O cálculo de hash gera uma sequência de caracteres de tamanho fixo (o "hash") a partir de um arquivo. Qualquer alteração no arquivo, por menor que seja, resultará em um hash completamente diferente. Esta propriedade é utilizada para verificar a integridade de um arquivo, garantindo que ele não foi modificado.\r\n\r\nEste relatório utiliza dois algoritmos para máxima segurança e robustez:\r\n- SHA-256: Padrão de segurança atual da indústria.\r\n- SHA-512: Versão mais longa e robusta, ideal para máxima segurança.\r\n\r\nOs cálculos são realizados localmente no navegador via API Web Crypto nativa.\r\n\r\n`;
+            
+            content += `======================================================================\r\n`;
+            content += `                   ARQUIVOS PROCESSADOS\r\n`;
+            content += `======================================================================\r\n\r\n`;
+            
+            reportData.forEach(file => {
+                const extension = file.name.includes('.') ? file.name.split('.').pop() : 'N/A';
+                content += `Nome do Arquivo...: ${file.name}\r\n`;
+                content += `Extensão..........: .${extension}\r\n`;
+                content += `Tamanho...........: ${file.size}\r\n`;
+                content += `Última Modificação: ${file.lastModified}\r\n`;
+                content += `Hash (SHA-256)....: ${file.hash_sha256}\r\n`;
+                content += `Hash (SHA-512)....: ${file.hash_sha512}\r\n`;
+                content += `----------------------------------------------------------------------\r\n`;
+            });
+            
+            content += `\r\nFIM DO RELATÓRIO.\r\n`;
+            
+            return content;
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+    });
+    </script>
+</body>
+</html>

@@ -2,85 +2,201 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Ferramentas OSINT</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferramentas OSINT - Investigação Digital</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --background-color: #f8f9fa;
+      --card-color: #ffffff;
+      --border-color: #e9ecef;
+      --text-color: #212529;
+      --muted-text-color: #6c757d;
+      --accent-color: #0d6efd;
+      --shadow-color: rgba(0, 0, 0, 0.05);
+      --font-primary: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: var(--font-primary);
+      margin: 0;
+      padding: 2rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--text-color);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    /* Estilo para cada seção de conteúdo */
+    .content-section {
+      background-color: var(--card-color);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px var(--shadow-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .content-section h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Estilo para a lista de ferramentas */
+    .tool-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .tool-list li {
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+    }
+    
+    .tool-list li:hover {
+        background-color: #f8f9fa;
+    }
+
+    .tool-list a {
+      display: block;
+      padding: 1rem;
+      text-decoration: none;
+      color: var(--text-color);
+    }
+
+    .tool-list a strong {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-right: 8px;
+    }
+    
+    .tool-list a small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted-text-color);
+        font-size: 0.9rem;
+    }
+
+    /* Estilo para o botão de voltar */
+    .voltar-container {
+        text-align: center;
+        margin-top: 3rem;
+    }
+    
+    .btn-voltar {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: #ffffff;
+        padding: 0.8rem 1.8rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-voltar:hover {
+        background-color: #0b5ed7;
+        transform: translateY(-2px);
+    }
+    
+    @media (max-width: 600px) {
+        body { padding: 1rem; }
+        h1 { font-size: 2.2rem; margin-bottom: 2rem; }
+        .content-section { padding: 1.5rem; }
+        .content-section h2 { font-size: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
-  <h1>🕵️ Ferramentas OSINT</h1>
 
-  <section>
-    <h2>🔎 Busca de Usuários em Plataformas</h2>
-    <ul>
-      <li><a href="https://github.com/sherlock-project/sherlock" target="_blank" title="Pesquisa usernames em mais de 300 sites">Sherlock</a></li>
-      <li><a href="https://whatsmyname.app" target="_blank" title="Verifica onde um nome de usuário está registrado">What's My Name</a></li>
-      <li><a href="https://commentpicker.com/instagram-username.php" target="_blank" title="Extrai o nome de usuário de URLs do Instagram">Instagram Username Finder</a></li>
-      <li><a href="https://commentpicker.com/instagram-user-id.php" target="_blank" title="Converte usernames do Instagram em IDs numéricos">Instagram User ID Finder</a></li>
-      <li><a href="https://instanonimo.com/pt" target="_blank" title="Permite visualizar stories e perfis públicos de forma anônima">Instanônimo</a></li>
-      <li><a href="osint/Socket Puppet.html" target="_blank" title="Teste de sockets e pacotes">Socket Puppet</a></li>
-    </ul>
-  </section>
+  <main class="container">
+    <h1>🕵️ Ferramentas OSINT</h1>
 
-  <section>
-    <h2>🌍 Pesquisa por Endereço IP / Localização</h2>
-    <ul>
-      <li><a href="https://ipinfo.io" target="_blank" title="Localização e informações sobre IPs">IPInfo</a></li>
-      <li><a href="https://www.shodan.io" target="_blank" title="Busca dispositivos conectados à internet">Shodan</a></li>
-      <li><a href="https://greynoise.io" target="_blank" title="Detecta comportamento de IPs em massa">GreyNoise</a></li>
-    </ul>
-  </section>
+    <section class="content-section">
+      <h2>🔎 Busca de Usuários</h2>
+      <ul class="tool-list">
+        <li><a href="https://whatsmyname.app" target="_blank"><strong>What's My Name</strong> <small>Verifica onde um nome de usuário está registrado em centenas de sites.</small></a></li>
+        <li><a href="https://usersearch.org/" target="_blank"><strong>UserSearch</strong> <small>Busca reversa de nome de usuário e e-mail em mais de 700 sites.</small></a></li>
+        <li><a href="https://blackbird-osint.herokuapp.com/" target="_blank"><strong>Blackbird OSINT</strong> <small>Verifica a existência de um apelido em um grande número de plataformas.</small></a></li>
+        <li><a href="https://github.com/sherlock-project/sherlock" target="_blank"><strong>Sherlock</strong> <small>Ferramenta de linha de comando que pesquisa usernames em mais de 300 sites.</small></a></li>
+        <li><a href="https://instanonimo.com/pt" target="_blank"><strong>Instanônimo</strong> <small>Permite visualizar stories e perfis públicos do Instagram de forma anônima.</small></a></li>
+      </ul>
+    </section>
 
-  <section>
-    <h2>🧠 Busca de Dados Públicos e Pessoas</h2>
-    <ul>
-      <li><a href="https://www.spokeo.com/" target="_blank" title="Busca dados públicos de cidadãos dos EUA">Spokeo</a></li>
-      <li><a href="https://pimeyes.com" target="_blank" title="Reconhecimento facial reverso">PimEyes</a></li>
-      <li><a href="https://webmii.com" target="_blank" title="Busca por nomes em fontes públicas e redes sociais">Webmii</a></li>
-      <li><a href="https://tudosobretodos.info/39054949813" target="_blank" title="Busca de dados pessoais no Brasil">Tudo Sobre Todos</a></li>
-      <li><a href="https://donodozap.com/" target="_blank" title="Consulta de números WhatsApp">Dono do Zap</a></li>
-      <li><a href="https://osint.rocks/" target="_blank" title="Ferramentas e serviços de busca OSINT">OSINT Rocks</a></li>
-      <li><a href="https://www.osintcombine.com/tools" target="_blank" title="Ferramentas OSINT desenvolvidas pela OSINT Combine">OSINT Combine Tools</a></li>
-      <li><a href="https://www.aware-online.com/en/osint-tools/people-tools/" target="_blank" title="Ferramentas para investigação de pessoas">Aware Online - People Tools</a></li>
-    </ul>
-  </section>
+    <section class="content-section">
+        <h2>📧 Investigação de E-mails e Domínios</h2>
+        <ul class="tool-list">
+            <li><a href="https://epieos.com/" target="_blank"><strong>Epieos</strong> <small>Descobre contas de redes sociais e informações a partir de um endereço de e-mail.</small></a></li>
+            <li><a href="https://inteltechniques.com/tools/Email.html" target="_blank"><strong>IntelTechniques (Email Tools)</strong> <small>Conjunto de ferramentas para investigar e-mails, por Michael Bazzell.</small></a></li>
+            <li><a href="https://haveibeenpwned.com" target="_blank"><strong>Have I Been Pwned</strong> <small>Verifica se seu e-mail ou telefone foi exposto em vazamentos de dados conhecidos.</small></a></li>
+            <li><a href="https://dehashed.com" target="_blank"><strong>Dehashed</strong> <small>Motor de busca para vazamentos; pesquisa por e-mail, IP, username, etc.</small></a></li>
+            <li><a href="https://intelx.io" target="_blank"><strong>IntelligenceX</strong> <small>Busca profunda em bancos de dados vazados, dark web e outras fontes.</small></a></li>
+        </ul>
+    </section>
 
-  <section>
-    <h2>📸 Análise de Imagens e Metadados</h2>
-    <ul>
-      <li><a href="https://fotoforensics.com" target="_blank" title="Análise de metadados e ELA">FotoForensics</a></li>
-      <li><a href="https://www.metadata2go.com/" target="_blank" title="Extrai metadados de arquivos">Metadata2Go</a></li>
-    </ul>
-  </section>
+    <section class="content-section">
+      <h2>🧠 Busca de Pessoas e Dados Públicos</h2>
+      <ul class="tool-list">
+        <li><a href="https://webmii.com" target="_blank"><strong>WebMii</strong> <small>Motor de busca de pessoas, agregando resultados de fontes públicas e redes sociais.</small></a></li>
+        <li><a href="https://www.social-searcher.com/" target="_blank"><strong>Social Searcher</strong> <small>Motor de busca em tempo real para mídias sociais, monitora menções e hashtags.</small></a></li>
+        <li><a href="https://pimeyes.com" target="_blank"><strong>PimEyes</strong> <small>Serviço de reconhecimento facial para busca reversa de imagens.</small></a></li>
+        <li><a href="https://app.osint.industries/" target="_blank"><strong>OSINT Industries</strong> <small>Plataforma profissional que agrega dados de diversas fontes, incluindo dark web e Telegram.</small></a></li>
+        <li><a href="https://www.aware-online.com/en/osint-tools/people-tools/" target="_blank"><strong>Aware Online - People Tools</strong> <small>Coleção de ferramentas focadas na investigação de pessoas.</small></a></li>
+      </ul>
+    </section>
 
-  <section>
-    <h2>🧩 Busca em Vazamentos</h2>
-    <ul>
-      <li><a href="https://haveibeenpwned.com" target="_blank" title="Verifica se seu e-mail foi exposto em vazamentos">Have I Been Pwned</a></li>
-      <li><a href="https://dehashed.com" target="_blank" title="Busca por e-mail, IP, username">Dehashed</a></li>
-      <li><a href="https://intelx.io" target="_blank" title="Busca profunda em bancos de dados vazados">IntelX</a></li>
-    </ul>
-  </section>
+    <section class="content-section">
+      <h2>📸 Análise de Imagens e Metadados</h2>
+      <ul class="tool-list">
+        <li><a href="https://fotoforensics.com" target="_blank"><strong>FotoForensics</strong> <small>Análise de metadados e ELA (Error Level Analysis) para verificar manipulações.</small></a></li>
+        <li><a href="https://www.metadata2go.com/" target="_blank"><strong>Metadata2Go</strong> <small>Ferramenta online para extrair metadados de diversos tipos de arquivos.</small></a></li>
+      </ul>
+    </section>
 
-  <section>
-    <h2>📞 Consulta de Telefones e Dados Oficiais</h2>
-    <ul>
-      <li><a href="https://consultanumero.abrtelecom.com.br/consultanumero/consulta/consultaSituacaoAtualCtg" target="_blank" title="Consulta oficial da operadora">Consulta Número - ABR Telecom</a></li>
-      <li><a href="https://www.tse.jus.br/servicos-eleitorais/autoatendimento-eleitoral#/atendimento-eleitor" target="_blank" title="Serviços do TSE">TSE - Autoatendimento Eleitoral</a></li>
-    </ul>
-  </section>
+    <section class="content-section">
+        <h2>🌍 Pesquisa por Endereço IP / Dispositivos</h2>
+        <ul class="tool-list">
+          <li><a href="https://www.shodan.io" target="_blank"><strong>Shodan</strong> <small>Motor de busca para encontrar dispositivos conectados à internet (câmeras, servidores, etc.).</small></a></li>
+          <li><a href="https://ipinfo.io" target="_blank"><strong>IPInfo</strong> <small>Fornece localização detalhada e informações sobre endereços de IP.</small></a></li>
+          <li><a href="https://greynoise.io" target="_blank"><strong>GreyNoise</strong> <small>Analisa o "ruído" da internet, ajudando a identificar scans e tráfego malicioso.</small></a></li>
+        </ul>
+      </section>
 
-  <section>
-    <h2>🔗 Agregadores e Frameworks</h2>
-    <ul>
-      <li><a href="https://osintframework.com" target="_blank" title="Mapa de ferramentas OSINT">OSINT Framework</a></li>
-      <li><a href="https://start.me/p/DPYpmE/osint" target="_blank" title="Agregador de links úteis">Start.me OSINT</a></li>
-    </ul>
-  </section>
+    <section class="content-section">
+      <h2>🔗 Agregadores e Frameworks</h2>
+      <ul class="tool-list">
+        <li><a href="https://osintframework.com" target="_blank"><strong>OSINT Framework</strong> <small>O mapa mais conhecido de ferramentas OSINT, organizado por categoria.</small></a></li>
+        <li><a href="http://OSINT.rocks" target="_blank"><strong>OSINT.rocks</strong> <small>Meta-ferramenta de busca de usuários e agregador de recursos OSINT.</small></a></li>
+        <li><a href="https://start.me/p/DPYpmE/osint" target="_blank"><strong>Start.me OSINT</strong> <small>Página inicial personalizada com uma vasta coleção de links OSINT.</small></a></li>
+      </ul>
+    </section>
 
-  <div class="voltar">
-    <a href="index.html">← Voltar à página inicial</a>
-  </div>
+    <div class="voltar-container">
+      <a href="https://combatcop.github.io/investigadigital/" class="btn-voltar">← Voltar à Página Inicial</a>
+    </div>
+  </main>
 
-  <script src="script.js"></script>
 </body>
 </html>

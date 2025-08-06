@@ -2,38 +2,187 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Ferramentas de Investigação</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferramentas de Investigação Digital</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --background-color: #f8f9fa;
+      --card-color: #ffffff;
+      --border-color: #dee2e6;
+      --text-color: #212529;
+      --muted-text-color: #6c757d;
+      --accent-color: #0d6efd;
+      --shadow-color: rgba(0, 0, 0, 0.05);
+      --font-primary: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: var(--font-primary);
+      font-weight: 400;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--muted-text-color);
+      font-size: 1.2rem;
+      margin-bottom: 4rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      width: 100%;
+    }
+
+    .card {
+      background-color: var(--card-color);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2.5rem 1.5rem;
+      text-decoration: none;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 4px 6px var(--shadow-color);
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .card .emoji {
+      font-size: 2.5rem;
+    }
+    
+    .card .text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    footer {
+      margin-top: 5rem;
+      color: var(--muted-text-color);
+      font-size: 0.9rem;
+    }
+
+    /* Media Queries para Responsividade */
+    @media (max-width: 992px) {
+      .link-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 600px) {
+      body {
+        padding: 1.5rem 1rem;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .subtitle {
+        margin-bottom: 3rem;
+      }
+      .link-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>🔍 Ferramentas de Investigação</h1>
-  <p>Escolha uma das áreas abaixo:</p>
 
-  <div class="link-box">
-    <a href="osint.html">🕵️ Ferramentas OSINT</a>
-  </div>
+  <main class="container">
+    <h1>🔍 Ferramentas de Investigação</h1>
+    <p class="subtitle">Escolha uma das áreas de atuação abaixo:</p>
 
-  <div class="link-box">
-    <a href="verificacao-vazamentos/index.html">🧩 Verificação de Vazamentos de Dados</a>
-  </div>
+    <nav class="link-grid">
+      <a href="https://combatcop.github.io/investigadigital/osint.html" class="card">
+        <span class="emoji">🕵️</span>
+        <span class="text">Ferramentas OSINT</span>
+      </a>
+      
+      <a href="https://combatcop.github.io/investigadigital/verificacao-vazamentos/" class="card">
+        <span class="emoji">🧩</span>
+        <span class="text">Verificação de Vazamentos</span>
+      </a>
+      
+      <a href="https://combatcop.github.io/investigadigital/arquivos-uteis/" class="card">
+        <span class="emoji">📂</span>
+        <span class="text">Arquivos e Programas Úteis</span>
+      </a>
+      
+      <a href="https://combatcop.github.io/investigadigital/programas-pericia/" class="card">
+        <span class="emoji">🧬</span>
+        <span class="text">Programas de Perícia</span>
+      </a>
+      
+      <a href="https://combatcop.github.io/investigadigital/aplicacao-da-lei/" class="card">
+        <span class="emoji">⚖️</span>
+        <span class="text">Links de Aplicação da Lei</span>
+      </a>
+      
+      <a href="https://combatcop.github.io/investigadigital/inteligencia-artificial.html" class="card">
+        <span class="emoji">🤖</span>
+        <span class="text">Inteligência Artificial</span>
+      </a>
+      
+      <a href="https://combatcop.github.io/investigadigital/tutoriais.html" class="card">
+        <span class="emoji">🎓</span>
+        <span class="text">Tutoriais</span>
+      </a>
 
-  <div class="link-box">
-    <a href="arquivos-uteis/index.html">📂 Arquivos e Programas Úteis</a>
-  </div>
-
-  <div class="link-box">
-    <a href="programas-pericia/index.html">🧬 Programas de Perícia</a>
-  </div>
-
-  <div class="link-box">
-    <a href="aplicacao-da-lei/index.html">⚖️ Links de Aplicação da Lei</a>
-  </div>
+      <a href="https://combatcop.github.io/investigadigital/FTA.html" class="card">
+        <span class="emoji">🎤</span>
+        <span class="text">Transcrição de Áudios</span>
+      </a>
+      
+      <a href="https://combatcop.github.io/investigadigital/socketpuppet.html" class="card">
+        <span class="emoji">🎭</span>
+        <span class="text">Socket Puppet</span>
+      </a>
+    </nav>
+  </main>
 
   <footer>
-    © Ferramentas de Investigação – Pedro Henrique
+    © Investigação Digital – Pedro Henrique
   </footer>
 
-  <script src="script.js"></script>
 </body>
 </html>

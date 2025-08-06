@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programas de Perícia - Investigação Digital</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+          --background-color: #f8f9fa; --card-color: #ffffff; --border-color: #e9ecef;
+          --text-color: #212529; --muted-text-color: #6c757d; --accent-color: #0d6efd;
+          --shadow-color: rgba(0, 0, 0, 0.05); --font-primary: 'Poppins', sans-serif;
+        }
+        body { background-color: var(--background-color); color: var(--text-color); font-family: var(--font-primary); margin: 0; padding: 2rem; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 900px; width: 100%; }
+        h1 { font-size: 2.8rem; font-weight: 700; color: var(--text-color); text-align: center; margin-bottom: 1rem; }
+        h2 { font-size: 1.8rem; text-align: left; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; margin-top: 2.5rem; }
+        p.subtitle { text-align: center; font-size: 1.1rem; color: var(--muted-text-color); margin-bottom: 3rem; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .tool-card {
+            background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 1.5rem; text-decoration: none; color: var(--text-color);
+            display: flex; flex-direction: column; box-shadow: 0 4px 15px var(--shadow-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .card-header .icon { font-size: 2.2rem; width: 40px; text-align: center; }
+        .card-header .title { font-size: 1.3rem; font-weight: 600; }
+        .card-description { font-size: 0.95rem; color: var(--muted-text-color); line-height: 1.6; flex-grow: 1; }
+        .card-author { font-size: 0.85rem; font-style: italic; color: #a0aec0; margin-top: 1rem; text-align: right; }
+        .voltar-container { text-align: center; margin-top: 3rem; }
+        .btn-voltar { display: inline-block; background-color: var(--muted-text-color); color: #ffffff; padding: 0.8rem 1.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <h1>🧬 Programas de Perícia</h1>
+        <p class="subtitle">Ferramentas e softwares essenciais para a análise forense digital, tratamento de evidências e elaboração de laudos.</p>
+
+        <section>
+            <h2>Ferramentas Essenciais</h2>
+            <div class="grid-container">
+                <a href="https://combatcop.github.io/investigadigital/calculo.html" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <i class="icon fa-solid fa-hashtag" style="color: #3498db;"></i>
+                        <span class="title">Calculador de Hash</span>
+                    </div>
+                    <p class="card-description">Ferramenta para calcular o hash (SHA-256 e SHA-512) de múltiplos arquivos, garantindo a integridade da evidência digital, e gerar relatórios técnicos.</p>
+                    <p class="card-author">Dev. Pedro Henrique</p>
+                </a>
+                <a href="https://academiadeforensedigital.com.br/sistema-iped-forense/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <i class="icon fa-solid fa-fingerprint" style="color: #2c3e50;"></i>
+                        <span class="title">IPED Forense</span>
+                    </div>
+                    <p class="card-description">Plataforma open-source de análise forense. Permite processar e indexar grandes volumes de dados de discos, dispositivos móveis e outras fontes de evidência.</p>
+                     <p class="card-author">Polícia Federal do Brasil</p>
+                </a>
+                <a href="https://exiftool.org/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <i class="icon fa-solid fa-file-lines" style="color: #7f8c8d;"></i>
+                        <span class="title">ExifTool (Metadados)</span>
+                    </div>
+                    <p class="card-description">Poderoso leitor e editor de metadados. Extrai informações ocultas de imagens, vídeos e documentos, como data, hora, coordenadas GPS e dispositivo de origem.</p>
+                    <p class="card-author">Phil Harvey</p>
+                </a>
+                <a href="https://imagej.net/ij/" target="_blank" class="tool-card">
+                    <div class="card-header">
+                        <i class="icon fa-solid fa-magnifying-glass-chart" style="color: #e74c3c;"></i>
+                        <span class="title">ImageJ</span>
+                    </div>
+                    <p class="card-description">Software de processamento de imagens de nível científico. Usado em perícias para análise de placas, biometria (digitais, rostos) e medições (ex: altura de suspeitos).</p>
+                    <p class="card-author">National Institutes of Health, USA</p>
+                </a>
+            </div>
+        </section>
+
+        <div class="voltar-container">
+            <a href="https://combatcop.github.io/investigadigital/" class="btn-voltar">← Voltar à Página Inicial</a>
+        </div>
+    </main>
+
+</body>
+</html>

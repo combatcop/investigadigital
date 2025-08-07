@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programas Úteis - Investigação Digital</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+          --background-color: #f8f9fa; --card-color: #ffffff; --border-color: #e9ecef;
+          --text-color: #212529; --muted-text-color: #6c757d; --accent-color: #0d6efd;
+          --shadow-color: rgba(0, 0, 0, 0.05); --font-primary: 'Poppins', sans-serif;
+        }
+        body { background-color: var(--background-color); color: var(--text-color); font-family: var(--font-primary); margin: 0; padding: 2rem; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 900px; width: 100%; }
+        h1 { font-size: 2.8rem; font-weight: 700; color: var(--text-color); text-align: center; margin-bottom: 1rem; }
+        h2 { font-size: 1.8rem; text-align: left; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; margin-top: 2.5rem; }
+        p.subtitle { text-align: center; font-size: 1.1rem; color: var(--muted-text-color); margin-bottom: 3rem; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .tool-card {
+            background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 1.5rem; text-decoration: none; color: var(--text-color);
+            display: flex; flex-direction: column; box-shadow: 0 4px 15px var(--shadow-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .card-header .icon { font-size: 2.2rem; width: 40px; text-align: center; }
+        .card-header .title { font-size: 1.3rem; font-weight: 600; }
+        .card-description { font-size: 0.95rem; color: var(--muted-text-color); line-height: 1.6; flex-grow: 1; }
+        .voltar-container { text-align: center; margin-top: 3rem; }
+        .btn-voltar { display: inline-block; background-color: var(--muted-text-color); color: #ffffff; padding: 0.8rem 1.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <h1>📂 Programas e Utilitários</h1>
+        <p class="subtitle">Uma coleção de softwares essenciais para o trabalho de investigação, análise de dados e segurança operacional.</p>
+
+        <section>
+            <h2>Navegação e Segurança</h2>
+            <div class="grid-container">
+                <a href="https://www.google.com/chrome/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-chrome" style="color: #4285F4;"></i><span class="title">Google Chrome</span></div>
+                    <p class="card-description">O navegador mais popular, essencial para compatibilidade e uso de extensões da Chrome Web Store.</p>
+                </a>
+                <a href="https://www.mozilla.org/pt-BR/firefox/new/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-firefox-browser" style="color: #FF7139;"></i><span class="title">Mozilla Firefox</span></div>
+                    <p class="card-description">Navegador focado em privacidade e de código aberto, com ótimas ferramentas de desenvolvedor para análise web.</p>
+                </a>
+                <a href="https://www.torproject.org/download/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-user-secret" style="color: #7D4698;"></i><span class="title">Tor Browser</span></div>
+                    <p class="card-description">Ferramenta fundamental para navegação anônima, proteção de identidade e acesso a sites da rede .onion.</p>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentos e Arquivos</h2>
+            <div class="grid-container">
+                <a href="https://www.7-zip.org/download.html" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-file-zipper" style="color: #000;"></i><span class="title">7-Zip</span></div>
+                    <p class="card-description">O melhor compactador/descompactador de arquivos. Gratuito, de código aberto, suporta múltiplos formatos (ZIP, RAR, etc.) e pode abrir arquivos protegidos por senha.</p>
+                </a>
+                 <a href="https://get.adobe.com/br/reader/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-file-pdf" style="color: #FF0000;"></i><span class="title">Adobe Reader</span></div>
+                    <p class="card-description">O leitor de PDF padrão da indústria, essencial para visualizar documentos e relatórios de forma compatível.</p>
+                </a>
+                 <a href="https://keepassxc.org/download/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-key" style="color: #69B543;"></i><span class="title">KeePassXC</span></div>
+                    <p class="card-description">Gerenciador de senhas offline e seguro. Crucial para armazenar e gerenciar credenciais de contas e perfis utilizados em investigações.</p>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Análise de Mídia</h2>
+            <div class="grid-container">
+                <a href="https://www.audacityteam.org/download/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-brands fa-audacity" style="color: #0000C8;"></i><span class="title">Audacity</span></div>
+                    <p class="card-description">Editor de áudio gratuito e poderoso. Usado para analisar, limpar ruídos, cortar e examinar detalhes em gravações de áudio.</p>
+                </a>
+                <a href="https://www.videolan.org/vlc/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-photo-film" style="color: #FF8800;"></i><span class="title">VLC Media Player</span></div>
+                    <p class="card-description">Reprodutor de mídia universal que abre praticamente qualquer formato de vídeo ou áudio. Essencial para analisar evidências em vídeo.</p>
+                </a>
+                <a href="https://www.gimp.org/downloads/" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-paintbrush" style="color: #5C5547;"></i><span class="title">GIMP</span></div>
+                    <p class="card-description">Alternativa gratuita e de código aberto ao Photoshop. Poderoso para análise forense de imagens, ajustes e extração de detalhes.</p>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Captura de Tela e Virtualização</h2>
+            <div class="grid-container">
+                 <a href="https://obsproject.com/pt-br/download" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-video" style="color: #000;"></i><span class="title">OBS Studio</span></div>
+                    <p class="card-description">A ferramenta mais completa para gravação de tela e transmissão. Ideal para documentar passo a passo uma navegação ou análise.</p>
+                </a>
+                <a href="https://getsharex.com/downloads" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-camera-retro" style="color: #2F3136;"></i><span class="title">ShareX</span></div>
+                    <p class="card-description">Utilitário de captura de tela extremamente poderoso. Permite capturar, anotar, ofuscar informações e automatizar o upload de imagens.</p>
+                </a>
+                <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" class="tool-card">
+                    <div class="card-header"><i class="icon fa-solid fa-cubes" style="color: #1F5980;"></i><span class="title">VirtualBox</span></div>
+                    <p class="card-description">Crie máquinas virtuais para testar softwares maliciosos ou acessar sites suspeitos em um ambiente seguro e isolado do seu sistema principal.</p>
+                </a>
+            </div>
+        </section>
+
+        <div class="voltar-container">
+            <a href="https://combatcop.github.io/investigadigital/" class="btn-voltar">← Voltar à Página Inicial</a>
+        </div>
+    </main>
+
+</body>
+</html>

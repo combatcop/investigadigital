@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Launcher de Assistentes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f8f9fa; --card:#fff; --border:#e9ecef; --text:#212529; --muted:#6c757d; --accent:#0d6efd; --accent-dark:#084298; --shadow:0 6px 18px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+
+    /* Cabeçalho Investiga Digital */
+    header{background:var(--card);box-shadow:var(--shadow);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+    header .logo{display:flex;align-items:center;font-weight:700;font-size:1.2rem;color:var(--text);text-decoration:none}
+    header .logo i{margin-right:.5rem;color:var(--accent)}
+    nav a{margin-left:1rem;color:var(--text);text-decoration:none;font-weight:500}
+    nav a:hover{color:var(--accent)}
+
+    .container{max-width:1100px;margin:0 auto;padding:1.4rem 2rem}
+    h1{font-size:2rem;margin:.2rem 0 1rem;text-align:center}
+
+    /* Cards */
+    .assistentes{display:flex;flex-wrap:wrap;gap:18px;justify-content:center}
+    .assistente{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px;width:300px;display:flex;flex-direction:column}
+    .assistente h2{font-size:1.1rem;margin:0 0 .4rem}
+    .assistente p{color:var(--muted);margin:0 0 .8rem;flex:1}
+    .assistente a{display:inline-block;text-align:center;background:var(--accent);color:#fff;text-decoration:none;padding:.6rem .9rem;border-radius:8px;font-weight:600}
+    .assistente a:hover{background:var(--accent-dark)}
+
+    footer{margin-top:2rem;background:#212529;color:#adb5bd;text-align:center;padding:1.2rem}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="#topo"><i>🕵️</i>Investiga Digital</a>
+    <nav>
+      <a href="#">Início</a>
+      <a href="#">Ferramentas</a>
+      <a href="#">Contato</a>
+    </nav>
+  </header>
+
+  <main id="topo" class="container">
+    <h1>Launcher de Assistentes (GPTs & Gens)</h1>
+    <div class="assistentes">
+      <!-- Cards de Assistentes -->
+      <div class="assistente"><h2>🧩 Gerador de Prompts e Assistentes</h2><p>Cria prompts profissionais e assistentes sob medida (persona, tarefa, contexto, formato).</p><a href="https://chatgpt.com/g/g-68967cba9570819187886e8a2a5373db-gerador-de-prompts-e-assistentes" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>✍️ Corretor Ortográfico & Estilo</h2><p>Revisa ortografia/gramática, melhora clareza e adequa o tom (formal/administrativo/técnico).</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>⚖️ Legislação & Jurisprudência (RAG)</h2><p>Responde com base em leis/súmulas anexadas, citando artigos e trechos relevantes.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>🕵️ Analisador de Depoimentos</h2><p>Resume, encontra contradições e gera perguntas de follow‑up com linha do tempo.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>🧷 Vínculos Societários & Contratuais</h2><p>Mapeia pessoas/empresas, sócios comuns, endereços e contratos cruzados (red flags).</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>🏦 Analista de Dados Bancários (AML)</h2><p>Detecta smurfing, layering, circularidade e operações suspeitas em extratos/PIX.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>🧪 Perito Criminal Digital</h2><p>Orienta aquisição forense, hashes, logs, e gera laudos/checklists auditáveis.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>📜 Execução Penal (Pareceres)</h2><p>Produz pareceres sobre benefícios e cálculo de pena com checklist objetivo/subjetivo.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>📈 Painel de BOs & Hotspots</h2><p>Gera indicadores, hotspots e recomendações operacionais a partir de BOs/geo.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>🚧 Planejamento de Bloqueio/Interceptação</h2><p>Cria plano tático: pontos, rotas, critérios de abordagem, riscos e comunicação.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>📂 Ofícios & Minutas Oficiais</h2><p>Gera minutas de ofícios, portarias e comunicações formais padronizadas.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>🧬 Laudos DNA/Toxicológico</h2><p>Modelos de laudos por especialidade com metodologia e limitações técnicas.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>🛡️ Cadeia de Custódia Digital Avançada</h2><p>Procedimentos, registros e relatórios para preservação e integridade de evidências.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+      <div class="assistente"><h2>📁 IP/IPM Orquestrador</h2><p>Organiza fases, diligências, peças e prazos de IP ou IPM com checklist e cronograma.</p><a href="#" target="_blank" rel="noopener">Abrir Assistente</a></div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Investiga Digital — Launcher.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

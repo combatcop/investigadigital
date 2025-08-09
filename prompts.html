@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia de IA Generativa + Biblioteca de Prompts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root{
+      --background-color:#f8f9fa; --card-color:#ffffff; --border-color:#e9ecef;
+      --text-color:#212529; --muted-text-color:#6c757d; --accent-color:#0d6efd;
+      --success-color:#198754; --danger-color:#dc3545; --shadow-color:rgba(0,0,0,.06);
+      --font-primary:'Poppins',sans-serif; --font-mono:'Roboto Mono',monospace;
+    }
+    *{box-sizing:border-box}
+    body{background:var(--background-color);color:var(--text-color);font-family:var(--font-primary);margin:0;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+    .site-header{width:100%;background:var(--card-color);box-shadow:0 2px 6px var(--shadow-color);padding:1rem 2rem;margin-bottom:2rem;position:sticky;top:0;z-index:5}
+    .logo{font-size:1.5rem;font-weight:700;color:var(--text-color);text-decoration:none}
+    .logo i{color:var(--accent-color);margin-right:.5rem}
+
+    .container{max-width:980px;width:100%;padding:0 2rem;margin:0 auto;flex:1}
+    h1{font-size:2.4rem;font-weight:700;text-align:center;margin:0 0 .6rem}
+    p.subtitle{text-align:center;font-size:1.05rem;color:var(--muted-text-color);margin:0 0 1.6rem}
+
+    h2{font-size:1.8rem;font-weight:700;margin:0 0 1rem;border-bottom:2px solid var(--accent-color);padding-bottom:.5rem}
+    h3{font-size:1.15rem;font-weight:600;color:var(--text-color);margin:0 0 .5rem}
+
+    .card{background:var(--card-color);border-radius:14px;padding:1.6rem;margin-bottom:1.6rem;box-shadow:0 6px 18px var(--shadow-color);border:1px solid var(--border-color)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+    @media (max-width:960px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+    ul{padding-left:1.1rem}
+    ul.clean{list-style:none;padding-left:0;margin:0}
+    ul.clean li{position:relative;padding-left:26px;margin:.45rem 0}
+    ul.clean li::before{content:'✓';position:absolute;left:0;color:var(--success-color);font-weight:700}
+
+    .note{background:#f6f9ff;border:1px solid #cfe2ff;color:#084298;border-radius:10px;padding:1rem;margin-top:.8rem}
+
+    /* Accordion */
+    .accordion-item{border:1px solid var(--border-color);border-radius:12px;margin-bottom:1rem;overflow:hidden;background:var(--card-color)}
+    .accordion-header{background:#f8f9fa;padding:1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+    .accordion-header:hover{background:#eef2f7}
+    .accordion-header i{transition:transform .25s ease}
+    .accordion-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;background:var(--card-color);padding:0 1.2rem}
+    .accordion-item.active .accordion-header i{transform:rotate(180deg)}
+    .accordion-inner{padding:1rem 0 1.2rem}
+
+    /* Toolbar + prompts */
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:.6rem 0 1rem}
+    .toolbar input[type="search"]{flex:1;min-width:260px;border:1px solid var(--border-color);border-radius:10px;padding:.7rem 1rem}
+    .pill{border:1px solid var(--border-color);background:#f8f9fa;border-radius:999px;padding:.45rem .75rem;font-size:.9rem;cursor:pointer}
+    .pill.active{background:#e9f2ff;border-color:#cfe2ff;color:#084298}
+
+    .prompt-card{border:1px solid var(--border-color);border-radius:10px;margin:1rem 0;overflow:hidden}
+    .prompt-title{background:#f8f9fa;padding:1rem 1.2rem;font-weight:600;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center}
+    .prompt-text{padding:1.1rem;background:#1f2937;color:#e5eef8;font-family:var(--font-mono);font-size:.93rem;white-space:pre-wrap;margin:0}
+    .copy-btn{background:var(--accent-color);color:#fff;padding:.55rem .85rem;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+    .copy-btn:hover{background:#0b5ed7}
+
+    footer{width:100%;margin-top:2rem;padding:1.6rem;background:#212529;color:#adb5bd;font-size:.9rem;text-align:center}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a href="#topo" class="logo"><i class="fa-solid fa-user-secret"></i> Investiga Digital</a>
+  </header>
+
+  <main id="topo" class="container">
+    <h1>🧠 Guia de IA Generativa + Biblioteca de Prompts</h1>
+    <p class="subtitle">Conceitos essenciais (IA, IAG, LLM, tokens, janela de contexto, embeddings, RAG), boas práticas de prompting e uma biblioteca de prompts prontos para colar nas IAs (ChatGPT, Gemini, Copilot, Claude).</p>
+
+    <!-- INTRODUÇÃO COMPLETA -->
+    <section class="card" id="intro">
+      <h2>Introdução</h2>
+      <div class="grid-2">
+        <div>
+          <p>📈 Nos últimos anos, as <strong>Inteligências Artificiais Generativas (IAGs)</strong> — como ChatGPT, Gemini, Claude e Copilot — <strong>democratizaram</strong> o acesso à IA. Antes, era preciso programar ou entender algoritmos; hoje, basta escrever um comando para obter <em>respostas complexas</em>, <em>textos</em>, <em>análises</em> e <em>ideias criativas</em>.</p>
+          <p>🎯 Para extrair o máximo dessas ferramentas, é fundamental <strong>saber se comunicar</strong> com elas. Isso é <em>Engenharia de Prompt</em>: formular instruções claras, específicas e contextualizadas para obter respostas <strong>úteis, verificáveis e no formato certo</strong>.</p>
+          <div class="note">💡 Dica rápida: trate a IA como um colaborador. Diga <em>quem</em> ela é (persona), <em>o que</em> precisa (tarefa), com <em>qual base</em> (contexto) e <em>como</em> entregar (formato).</div>
+        </div>
+        <div>
+          <h3>🔎 Prompt x Pesquisa na internet</h3>
+          <ul class="clean">
+            <li>🔗 <strong>Pesquisa</strong> devolve links e páginas já existentes.</li>
+            <li>🧮 <strong>Prompt</strong> gera uma resposta nova, dentro do chat, podendo usar buscas integradas para dados atuais.</li>
+            <li>🧭 Escolha conforme o objetivo: consultar uma fonte específica vs. <em>sintetizar/gerar</em> um conteúdo sob medida.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCEITOS FUNDAMENTAIS EXPANDIDOS -->
+    <section class="card" id="conceitos">
+      <h2>Conceitos fundamentais</h2>
+      <div class="grid-2">
+        <div>
+          <h3>🤖 O que é IA (Inteligência Artificial)?</h3>
+          <p><strong>IA</strong> é a área da computação que cria sistemas capazes de <em>perceber</em>, <em>aprender</em>, <em>raciocinar</em> e <em>tomar decisões</em> para executar tarefas que normalmente exigiriam inteligência humana. Vai de modelos simples a sistemas generativos multimodais (texto, imagem, áudio).</p>
+          <h3>🧬 O que é IAG?</h3>
+          <p><strong>IAG</strong> significa <em>Inteligência Artificial Generativa</em>. São modelos capazes de <em>criar</em> conteúdo inédito (texto, imagem, áudio, vídeo) a partir de instruções. Ex.: escrever um ofício, resumir um processo, gerar um roteiro, esboçar um mapa textual.</p>
+          <h3>📚 O que são LLMs?</h3>
+          <p><strong>LLM</strong> (<em>Large Language Model</em>) é o “motor” linguístico. Treinado em grandes corpora, aprende padrões de linguagem e consegue responder instruções em linguagem natural. Exemplos práticos: <em>GPT‑4o</em> (OpenAI), <em>Claude 3.5</em> (Anthropic), <em>Gemini 1.5</em> (Google), <em>Llama 3</em> (Meta).</p>
+        </div>
+        <div>
+          <h3>🔡 Tokens & janela de contexto</h3>
+          <p>Modelos processam <strong>tokens</strong> (pedaços de palavras). A <strong>janela de contexto</strong> é o total de tokens que cabem na conversa (entrada + resposta + anexos). Se ultrapassar, o modelo <em>trunca</em> partes antigas. Regra prática: <em>~100 tokens ≈ 75 palavras</em>.</p>
+          <h3>📐 Embeddings (vetores)</h3>
+          <p>O texto vira <strong>vetores</strong> num espaço multidimensional. Proximidade de vetores = semelhança semântica. Base para <em>busca semântica</em>, <em>deduplicação</em> e <em>RAG</em>.</p>
+          <h3>🔗 RAG (Geração Aumentada por Recuperação)</h3>
+          <p><strong>RAG</strong> combina IA + bases externas. Você busca trechos relevantes e passa ao modelo como <em>contexto</em>. Resultado: respostas mais <strong>atuais</strong> e <strong>fundamentadas</strong>, com menos alucinação.</p>
+        </div>
+      </div>
+      <div class="note">🚨 <strong>Alucinações</strong>: quando o modelo “inventa” detalhes. Reduza com: escopo claro, fontes anexas, pedidos de citação, verificação cruzada, e instrução para responder <em>"não sei"</em> quando faltar base.</div>
+    </section>
+
+    <!-- 4 ELEMENTOS DO PROMPT (PROFUNDO) -->
+    <section class="card" id="elementos">
+      <h2>🧱 4 Elementos do Prompt (explicação completa)</h2>
+      <div class="grid-2">
+        <div>
+          <h3>🎭 Persona — “Quem responde?”</h3>
+          <p>Defina o <strong>papel</strong> que a IA deve assumir para calibrar tom, profundidade e critérios. Evite adornos inúteis (ex.: “10 anos de experiência”) e foque no <em>nível</em> desejado.</p>
+          <ul class="clean">
+            <li>Ex.: “Atue como <strong>analista criminal sênior</strong> de polícia judiciária, com foco em vínculos societários e financeiro‑contábil.”</li>
+            <li>Ex.: “Atue como <strong>redator oficial</strong>, padrão ABNT/linguagem administrativa.”</li>
+          </ul>
+        </div>
+        <div>
+          <h3>🎯 Tarefa — “O que fazer?”</h3>
+          <p>Descreva <strong>claramente</strong> a ação: analisar, resumir, comparar, extrair, converter. Opcional: exija <em>passos</em> e <em>critérios de qualidade</em>.</p>
+          <ul class="clean">
+            <li>Ex.: “Analise depoimento e produza: (1) cronograma, (2) convergências/divergências, (3) contradições, (4) perguntas de follow‑up.”</li>
+            <li>Ex.: “Redija ofício com seções: destinatário, objeto, fundamentação, providências, prazo.”</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h3>📂 Contexto — “Com base em quê?”</h3>
+          <p>Inclua <strong>dados, limites e público‑alvo</strong>. Quando essencial, <em>anexe trechos</em> e diga: “use apenas o que está entre &lt;docs&gt;…&lt;/docs&gt;”.</p>
+          <ul class="clean">
+            <li>Ex.: “Considere as planilhas CSV anexas e a Portaria X. Se algo não estiver nos &lt;docs&gt;, informe falta de base.”</li>
+            <li>Ex.: “Público: oficiais recém‑ingressos; evitar jargões; foco operacional.”</li>
+          </ul>
+        </div>
+        <div>
+          <h3>📜 Formato — “Como entregar?”</h3>
+          <p>Especifique <strong>estrutura e padrão</strong> (Markdown, tabela, JSON estrito, ofício). Isso economiza retrabalho.</p>
+          <ul class="clean">
+            <li>Ex.: “Saída em <strong>JSON estrito</strong>: {"resumo":"…","itens":[{"id":1,"acao":"…"}]}.”</li>
+            <li>Ex.: “Relatório em Markdown, com Sumário, Achados, Riscos, Recomendações.”</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">🧩 <strong>Fórmula rápida</strong>: <em>Persona</em> + <em>Tarefa</em> + <em>Contexto</em> + <em>Formato</em> + (Critérios de qualidade) + (Limites/Restrições).</div>
+    </section>
+
+    <!-- ESTRATÉGIAS (DETALHADAS) -->
+    <section class="card" id="estrategias">
+      <h2>🧠 6 Estratégias de Engenharia de Prompt</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>1) Instruções claras ✍️</h3>
+          <p>Especifique o que incluir/omitir, tamanho, exemplos e critérios. Se a resposta vier superficial, peça uma revisão com foco em precisão, rastreabilidade e formato.</p>
+        </div>
+        <div class="card">
+          <h3>2) Texto de referência 📎</h3>
+          <p>Anexe trechos relevantes e mande citar. Reduz “invenções” e aumenta confiabilidade — essencial em normas, jurisprudência e fatos sensíveis ao tempo.</p>
+        </div>
+        <div class="card">
+          <h3>3) Divida subtarefas 🪜</h3>
+          <p>Use <em>Prompt Chaining</em>: quebre a tarefa em passos, valide cada saída e só então componha o resultado final.</p>
+        </div>
+        <div class="card">
+          <h3>4) Dê tempo para pensar 🧩</h3>
+          <p>Peça raciocínio passo a passo (<em>Chain of Thought</em>) e verificação final. Estimula lógica e reduz erro sutil.</p>
+        </div>
+        <div class="card">
+          <h3>5) Use ferramentas 🔧</h3>
+          <p>RAG para dados, execuções de código para cálculos e parsing, APIs para atualizações. Preferir processamento a “opinião” do modelo.</p>
+        </div>
+        <div class="card">
+          <h3>6) Teste sistematicamente 🧪</h3>
+          <p>Defina <em>padrões‑ouro</em> (exemplos com respostas esperadas) e compare versões de prompt. Evolua com evidências, não intuição.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCEITOS EM ACORDEÃO (Aprofundados) -->
+    <section class="card" id="faq">
+      <h2>📚 Conceitos rápidos (clique para expandir)</h2>
+      <div class="accordion-item" data-acc>
+        <div class="accordion-header"><span>🔡 Tokens e tokenização</span><i class="fa-solid fa-chevron-down"></i></div>
+        <div class="accordion-content"><div class="accordion-inner">
+          <p>Tokens são unidades mínimas de texto. Em português, costumam ser pedaços de palavras. O modelo trabalha prevendo o próximo token dado o histórico. Saber disso ajuda a planejar a janela de contexto e custos.</p>
+          <ul>
+            <li>Regra prática: <em>~100 tokens ≈ 75 palavras</em>.</li>
+            <li>Textos técnicos densos geram mais tokens que textos simples de mesmo tamanho.</li>
+          </ul>
+        </div></div>
+      </div>
+      <div class="accordion-item" data-acc>
+        <div class="accordion-header"><span>🗂 Janela de contexto</span><i class="fa-solid fa-chevron-down"></i></div>
+        <div class="accordion-content"><div class="accordion-inner">
+          <p>É o limite de tokens (entrada + resposta + anexos). Se exceder, o sistema remove trechos antigos para abrir espaço ao novo, o que pode “quebrar” o fio lógico.</p>
+          <ul>
+            <li>Arquivos anexados contam como contexto (quando lidos pelo modelo).</li>
+            <li>Divida documentos grandes em blocos e resumos incrementais.</li>
+          </ul>
+        </div></div>
+      </div>
+      <div class="accordion-item" data-acc>
+        <div class="accordion-header"><span>📐 Embeddings (vetores)</span><i class="fa-solid fa-chevron-down"></i></div>
+        <div class="accordion-content"><div class="accordion-inner">
+          <p>Cada texto é convertido em um vetor. Usando distância/semelhança, encontramos trechos relevantes (busca semântica), agrupamos temas (clustering) e evitamos duplicatas.</p>
+        </div></div>
+      </div>
+      <div class="accordion-item" data-acc>
+        <div class="accordion-header"><span>🔗 RAG (Geração Aumentada por Recuperação)</span><i class="fa-solid fa-chevron-down"></i></div>
+        <div class="accordion-content"><div class="accordion-inner">
+          <p>Pipeline típico: (1) indexe documentos com embeddings; (2) receba a pergunta; (3) recupere trechos mais similares; (4) forneça esses trechos no prompt; (5) o modelo responde citando a base.</p>
+        </div></div>
+      </div>
+      <div class="accordion-item" data-acc>
+        <div class="accordion-header"><span>🛡️ Segurança, vieses e privacidade</span><i class="fa-solid fa-chevron-down"></i></div>
+        <div class="accordion-content"><div class="accordion-inner">
+          <p>Evite incluir dados sensíveis sem necessidade; valide saídas; registre fontes; e considere auditorias. Modelos podem refletir vieses do treinamento — compense com política de revisão.</p>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- BIBLIOTECA DE PROMPTS (mantida + pronta para copiar) -->
+    <section class="card" id="biblioteca">
+      <h2><i class="fa-solid fa-scroll"></i> Biblioteca de Prompts (copiar e colar)</h2>
+      <div class="toolbar">
+        <input id="q" type="search" placeholder="Buscar (ex.: IP, IPM, laudo, CFTV, JSON, RAG)…" aria-label="Buscar prompts" />
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="pill active" data-cat="todas">Todas</button>
+          <button class="pill" data-cat="geral">Geral</button>
+          <button class="pill" data-cat="investigacao">Investigação</button>
+          <button class="pill" data-cat="policia-judiciaria">Polícia Judiciária</button>
+          <button class="pill" data-cat="policia-judiciaria-militar">Polícia Judiciária Militar</button>
+          <button class="pill" data-cat="policiamento">Policiamento Ostensivo</button>
+          <button class="pill" data-cat="pericia">Perícia</button>
+          <button class="pill" data-cat="policia-penal">Polícia Penal</button>
+          <button class="pill" data-cat="fiscalizacao">Fiscalização</button>
+          <button class="pill" data-cat="mp">Ministério Público</button>
+          <button class="pill" data-cat="judiciario">Judiciário</button>
+        </div>
+      </div>
+
+      <div id="prompts">
+        <!-- ===================== GERAL ===================== -->
+        <div class="prompt-card" data-cat="geral">
+          <div class="prompt-title">Estrutura-base (4 elementos) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Atue como [persona clara]. Tarefa: [o que fazer]. Contexto: [dados/limites/público]. Formato: [forma de saída exata]. Comece confirmando entendimento e liste dúvidas antes de executar.</pre>
+        </div>
+        <div class="prompt-card" data-cat="geral">
+          <div class="prompt-title">Iterar e melhorar (revisão guiada) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Reavalie sua resposta com foco em: (1) precisão factual, (2) concisão, (3) formato pedido. Liste 3 melhorias, depois gere versão revisada. Se faltar base, sinalize com null.</pre>
+        </div>
+        <div class="prompt-card" data-cat="geral">
+          <div class="prompt-title">RAG manual (usar apenas os trechos) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Use exclusivamente os trechos entre &lt;docs&gt;…&lt;/docs&gt; para responder. Se faltar base, diga explicitamente. Cite o ID do trecho utilizado. &lt;docs id="A"&gt;…&lt;/docs&gt; &lt;docs id="B"&gt;…&lt;/docs&gt;</pre>
+        </div>
+        <div class="prompt-card" data-cat="geral">
+          <div class="prompt-title">Forçar formato JSON estrito <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Retorne APENAS JSON válido: {"resumo":"…","itens":[{"id":1,"acao":"…","risco":null}]} — não inclua comentários fora do JSON. Se faltar base, use null.</pre>
+        </div>
+        <div class="prompt-card" data-cat="geral">
+          <div class="prompt-title">Dividir tarefa complexa em subtarefas <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Decomponha a tarefa em subtarefas independentes, proponha ordem de execução, defina critérios de aceitação por subtarefa e só então execute passo a passo.</pre>
+        </div>
+
+        <!-- ===================== INVESTIGAÇÃO ===================== -->
+        <div class="prompt-card" data-cat="investigacao">
+          <div class="prompt-title">Plano de diligências (triagem e prioridade) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Atue como analista investigativo. Dado o caso &lt;resumo&gt;…&lt;/resumo&gt;, gere plano de diligências com: objetivos, responsáveis, prioridade (alta/média/baixa), prazo e critérios de conclusão. Saída: tabela Markdown.</pre>
+        </div>
+        <div class="prompt-card" data-cat="investigacao">
+          <div class="prompt-title">Cadeia de custódia (checklist documental) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Liste checklist para preservar cadeia de custódia em coleta de mídias (CFTV, celulares, pen drives): registro, lacre, armazenamento, transporte, conferência e logs de acesso. Saída: checklist + modelo de termo.</pre>
+        </div>
+        <div class="prompt-card" data-cat="investigacao">
+          <div class="prompt-title">Análise de CDR (telefonia) – hipóteses e hotspots <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">A partir de CDR (CSV: número,antena,datahora,duração), identifique: hotspots por célula/horário, co-presenças recorrentes, outliers temporais, e hipóteses de vínculo entre alvos. Relate limitações.</pre>
+        </div>
+        <div class="prompt-card" data-cat="investigacao">
+          <div class="prompt-title">Relatório final de inquérito (estrutura) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Estruture relatório final com: 1) histórico, 2) diligências, 3) provas (origem e integridade), 4) autoria e materialidade, 5) tipificação, 6) medidas sugeridas, 7) anexos. Linguagem técnica e objetiva.</pre>
+        </div>
+        <div class="prompt-card" data-cat="investigacao">
+          <div class="prompt-title">Vínculos societários (triagem) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Com base em dados de empresas/pessoas &lt;docs&gt;…&lt;/docs&gt;, identifique: sócios em comum, laranjas potenciais, endereços repetidos, contratos cruzados e cronologia financeira suspeita. Saída em lista numerada.</pre>
+        </div>
+
+        <!-- ===================== POLÍCIA JUDICIÁRIA ===================== -->
+        <div class="prompt-card" data-cat="policia-judiciaria">
+          <div class="prompt-title">Portaria de instauração de inquérito (minuta) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Atue como delegado(a) redator(a). Redija portaria de instauração de inquérito com: qualificação mínima, notícia do fato, capitulação inicial, nomeação de escrivão, diligências iniciais e prazos. Linguagem administrativa.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-judiciaria">
+          <div class="prompt-title">Representação por prisão preventiva (estrutura) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Elabore minuta com: fumus comissi delicti, periculum libertatis (garantia da ordem pública, instrução, aplicação da lei), adequação/necessidade, medidas alternativas avaliadas e pedidos finais.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-judiciaria">
+          <div class="prompt-title">Quebra de sigilo de dados (fundamentação) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Construa fundamentação objetiva para quebra de sigilo (telefônico/telemático/bancário), demonstrando indispensabilidade, nexo de pertinência e limites (período, alvos, escopo). Saída: minuta com itens numerados.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-judiciaria">
+          <div class="prompt-title">Cumprimento de mandados (plano operacional) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Planeje cumprimento de mandados (busca/apreensão/prisão): times, rotas, horários, matriz de risco, protocolos de entrada, preservação de provas digitais e comunicação pós-ação. Saída: checklist + cronograma.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-judiciaria">
+          <div class="prompt-title">Indiciamento (nota técnica) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Redija nota técnica de indiciamento: síntese dos fatos, lastro probatório (materialidade/autoria), tipificação, dolo/culpa, causas de aumento/diminuição e providências subsequentes.</pre>
+        </div>
+
+        <!-- ===================== POLÍCIA JUDICIÁRIA MILITAR ===================== -->
+        <div class="prompt-card" data-cat="policia-judiciaria-militar">
+          <div class="prompt-title">Inquérito Policial Militar (IPM) – portaria e designações <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Elabore minuta de portaria IPM com: fato investigado, base legal, oficial encarregado, prazos, controle de provas e comunicação à autoridade competente. Linguagem formal militar.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-judiciaria-militar">
+          <div class="prompt-title">Relatório de IPM (estrutura analítica) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Estruture relatório de IPM contendo: histórico, depoimentos-chave, perícias, análise técnica-jurídica, capitulação, conclusão e sugestões de encaminhamento.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-judiciaria-militar">
+          <div class="prompt-title">Oitiva de militar (roteiro objetivo) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Produza roteiro de oitiva com: qualificação, ciência de direitos, linha temporal, ordens recebidas/dadas, meios/recursos empregados, observância de normas internas e contraditórios.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-judiciaria-militar">
+          <div class="prompt-title">Medidas cautelares internas (propostas) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Liste medidas cautelares internas proporcionais: afastamento de função crítica, restrição de acesso, recolhimento de arma institucional, supervisão, com justificativas e prazos.</pre>
+        </div>
+
+        <!-- ===================== POLICIAMENTO OSTENSIVO ===================== -->
+        <div class="prompt-card" data-cat="policiamento">
+          <div class="prompt-title">Matriz tática para evento público <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Crie matriz tática com: fases (pré, durante, pós), efetivo por ponto, vias de escape, sala de situação, comunicação multi-agências e indicadores de gatilho para reforço/retirada.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policiamento">
+          <div class="prompt-title">Relatório pós-ação (AAR) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Produza After Action Report com: objetivos, execução, resultados, incidentes críticos, lições aprendidas, recomendações e plano de melhoria.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policiamento">
+          <div class="prompt-title">Análise de mapa criminal (tendências trimestrais) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Com base nos registros &lt;dados&gt;…&lt;/dados&gt;, identifique hotspots por bairro/turno, tipologias predominantes e sazonalidade. Sugira redistribuição de patrulha orientada por dados.</pre>
+        </div>
+
+        <!-- ===================== PERÍCIA ===================== -->
+        <div class="prompt-card" data-cat="pericia">
+          <div class="prompt-title">Requisição de perícia (minuta + quesitos) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Redija requisição com: objeto, perguntas (quesitos), prioridade, cadeia de custódia, prazos e forma de entrega. Inclua quesitos técnicos claros e objetivos.</pre>
+        </div>
+        <div class="prompt-card" data-cat="pericia">
+          <div class="prompt-title">Laudo pericial – estrutura padronizada <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Estruture laudo com: histórico, objeto periciado, metodologia, exames realizados, resultados, discussão, conclusão e limitações. Linguagem técnica, não conclusiva além da evidência.</pre>
+        </div>
+        <div class="prompt-card" data-cat="pericia">
+          <div class="prompt-title">Balística forense – roteiro de análise <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Liste etapas: exame de arma/munição, funcionalidade, microestriamento, comparação em microscópio, calibres compatíveis, distância de disparo, trajetória provável e incertezas.</pre>
+        </div>
+        <div class="prompt-card" data-cat="pericia">
+          <div class="prompt-title">Papiloscopia – checklist de coleta e conservação <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Crie checklist: técnicas de revelação (pó, ninidrina, cianoacrilato), sequência recomendada, registro fotográfico, acondicionamento e rastreio de cadeia de custódia.</pre>
+        </div>
+        <div class="prompt-card" data-cat="pericia">
+          <div class="prompt-title">Perícia digital – espelhamento e hash <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Defina protocolo: aquisição forense (imagem), cálculo/registro de hashes, preservação de mídia original, logs de acesso, ferramentas usadas e relatório de integridade.</pre>
+        </div>
+
+        <!-- ===================== POLÍCIA PENAL ===================== -->
+        <div class="prompt-card" data-cat="policia-penal">
+          <div class="prompt-title">Relato disciplinar (PAD) – estrutura objetiva <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Redija relato disciplinar com: fato, envolvidos, evidências, enquadramento normativo, medidas imediatas, oitiva e encaminhamentos. Saída: texto formal, claro e cronológico.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-penal">
+          <div class="prompt-title">Monitoramento eletrônico – análise de violações <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">A partir de logs de tornozeleira (CSV: datahora,evento,local), identifique padrões de violação (carga, zona de exclusão, rompimento), reincidência e medidas recomendadas.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-penal">
+          <div class="prompt-title">Plano de revista e segurança de unidade prisional <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Elabore plano com: setores, equipes, protocolos de revista, registro de achados, integridade dos servidores e respeito a direitos, com matriz de risco por pavilhão.</pre>
+        </div>
+        <div class="prompt-card" data-cat="policia-penal">
+          <div class="prompt-title">Relatório de movimentação carcerária (síntese executiva) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Gere síntese: entradas, saídas, transferências, evasões, incidentes, atendimentos de saúde e demandas judiciais no período. Saída: tabela + bullet points.</pre>
+        </div>
+
+        <!-- ===================== FISCALIZAÇÃO ===================== -->
+        <div class="prompt-card" data-cat="fiscalizacao">
+          <div class="prompt-title">Auditoria express – red flags por segmento <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Liste red flags típicas por segmento (licitações, saúde, obras, educação): fracionamento, exclusividade indevida, sobrepreço, aditivos sequenciais, favorecimento, baixa execução.</pre>
+        </div>
+        <div class="prompt-card" data-cat="fiscalizacao">
+          <div class="prompt-title">Plano de fiscalização orientado por dados <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Monte plano com seleção por risco (valor, histórico, fornecedor, índice de incidentes), cronograma, checklists, evidências mínimas e critérios de encerramento.</pre>
+        </div>
+
+        <!-- ===================== MINISTÉRIO PÚBLICO ===================== -->
+        <div class="prompt-card" data-cat="mp">
+          <div class="prompt-title">Parecer em execução penal (checklist) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Produza parecer sintético: cálculo de pena, requisito objetivo, conduta carcerária, laudos/relatórios, oitiva do MP/Defesa/Adm. prisional e conclusão fundamentada.</pre>
+        </div>
+        <div class="prompt-card" data-cat="mp">
+          <div class="prompt-title">Triagem de denúncia (classificação e encaminhamento) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Classifique a denúncia (cível/penal/administrativa), verifique competência, risco e urgência, proponha diligências iniciais e minuta de resposta ao denunciante.</pre>
+        </div>
+
+        <!-- ===================== JUDICIÁRIO ===================== -->
+        <div class="prompt-card" data-cat="judiciario">
+          <div class="prompt-title">Despacho sobre perícia (deferir/indeferir) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Redija despacho fundamentado para deferir/indeferir prova pericial: pertinência, utilidade, proporcionalidade, ônus da prova, prazo e quesitos essenciais.</pre>
+        </div>
+        <div class="prompt-card" data-cat="judiciario">
+          <div class="prompt-title">Decisão cautelar (busca e apreensão) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Elabore decisão com: probabilidade do direito, perigo de dano, adequação/necessidade, delimitação de escopo (locais/itens), condições de cumprimento e comunicação.</pre>
+        </div>
+        <div class="prompt-card" data-cat="judiciario">
+          <div class="prompt-title">Minuta de sentença (estruturação) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Estruture minuta com: relatório, fundamentação (fática e jurídica), dispositivo, custas e comunicações. Indique pontos onde o julgador deve ajustar manualmente.</pre>
+        </div>
+        <div class="prompt-card" data-cat="judiciario">
+          <div class="prompt-title">Controle de prazos (tabela dinâmica) <button class="copy-btn">Copiar</button></div>
+          <pre class="prompt-text">Gere tabela Markdown para controle de prazos processuais com: nº do processo, ato, prazo legal, termo inicial/final, situação e responsável. Inclua colunas de alerta.</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Investiga Digital — Página única.
+  </footer>
+
+  <script>
+    // Accordion (abre 1 por vez)
+    function setupAccordions(){
+      document.querySelectorAll('[data-acc]').forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        const content = item.querySelector('.accordion-content');
+        header.addEventListener('click', () => {
+          document.querySelectorAll('[data-acc]').forEach(other => {
+            if(other!==item){ other.classList.remove('active'); other.querySelector('.accordion-content').style.maxHeight = null; }
+          });
+          item.classList.toggle('active');
+          content.style.maxHeight = item.classList.contains('active') ? (content.scrollHeight + 'px') : null;
+        });
+      });
+    }
+
+    // Copiar prompt
+    function setupCopy(){
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const pre = btn.parentElement.nextElementSibling;
+          const text = pre?.textContent || '';
+          navigator.clipboard.writeText(text).then(() => {
+            const orig = btn.textContent; btn.textContent='Copiado!'; btn.style.backgroundColor='var(--success-color)';
+            setTimeout(()=>{btn.textContent=orig; btn.style.backgroundColor='var(--accent-color)';}, 1400);
+          });
+        });
+      });
+    }
+
+    // Busca e filtros
+    function setupFilters(){
+      const q = document.getElementById('q');
+      const pills = document.querySelectorAll('.pill');
+      const cards = document.querySelectorAll('#prompts .prompt-card');
+      function apply(){
+        const query = (q.value||'').toLowerCase();
+        const cat = document.querySelector('.pill.active')?.dataset.cat || 'todas';
+        cards.forEach(card => {
+          const okText = !query || card.innerText.toLowerCase().includes(query);
+          const okCat = cat==='todas' || card.dataset.cat===cat;
+          card.style.display = (okText && okCat) ? '' : 'none';
+        });
+      }
+      q?.addEventListener('input', apply);
+      pills.forEach(p => p.addEventListener('click', () => { pills.forEach(x=>x.classList.remove('active')); p.classList.add('active'); apply(); }));
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.addEventListener('DOMContentLoaded', () => { setupAccordions(); setupCopy(); setupFilters(); });
+  </script>
+</body>
+</html>

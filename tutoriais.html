@@ -3,103 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutoriais - Investigação Digital</title>
+    <title>Biblioteca de Aprendizado - Investiga Digital</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-          --background-color: #f8f9fa; --card-color: #ffffff; --border-color: #e9ecef;
-          --text-color: #212529; --muted-text-color: #6c757d; --accent-color: #0d6efd;
-          --shadow-color: rgba(0, 0, 0, 0.05); --font-primary: 'Poppins', sans-serif;
+            --background-color: #f8f9fa;
+            --card-color: #ffffff;
+            --border-color: #dee2e6;
+            --text-color: #212529;
+            --muted-text-color: #6c757d;
+            --accent-color: #0d6efd;
+            --accent-dark: #0b5ed7;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --font-primary: 'Poppins', sans-serif;
         }
-        body { background-color: var(--background-color); color: var(--text-color); font-family: var(--font-primary); margin: 0; padding: 2rem; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; align-items: center; }
-        .container { max-width: 800px; width: 100%; }
-        h1 { font-size: 2.8rem; font-weight: 700; color: var(--text-color); text-align: center; margin-bottom: 1rem; }
-        p.subtitle { text-align: center; font-size: 1.1rem; color: var(--muted-text-color); margin-bottom: 3rem; }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: var(--font-primary);
+            font-weight: 400;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
         
-        .posts-list { display: flex; flex-direction: column; gap: 2.5rem; }
+        .site-header {
+            width: 100%;
+            background-color: var(--card-color);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            padding: 1rem 2rem;
+            margin-bottom: 3rem;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .site-header .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+        .site-header .logo i {
+            color: var(--accent-color);
+            margin-right: 0.5rem;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 0 2rem;
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: var(--muted-text-color);
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .category-section {
+            margin-bottom: 3.5rem;
+        }
+
+        .category-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        .category-section h2 i {
+            color: var(--accent-color);
+        }
+        
+        .posts-list { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2.5rem; 
+        }
 
         .post-card {
-            background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 12px;
-            box-shadow: 0 4px 15px var(--shadow-color); overflow: hidden;
-            display: flex; flex-direction: column;
+            background-color: var(--card-color); 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color); 
+            overflow: hidden;
+            display: flex; 
+            flex-direction: column;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .post-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .post-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08); 
+        }
         
-        .post-thumbnail { position: relative; width: 100%; padding-top: 56.25%; /* Proporção 16:9 */ }
-        .post-thumbnail img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .post-thumbnail { 
+            position: relative; 
+            width: 100%; 
+            padding-top: 50%; /* Proporção 2:1 */ 
+            background-color: #e9ecef;
+        }
+        .post-thumbnail img { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
         .play-icon {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 4rem; color: rgba(255, 255, 255, 0.9); text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            font-size: 4rem; 
+            color: rgba(255, 255, 255, 0.9); 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            pointer-events: none;
         }
         
         .post-content { padding: 2rem; }
-        .post-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-        .post-category { background-color: var(--accent-color); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .post-date { font-size: 0.9rem; color: var(--muted-text-color); }
-        .post-title { font-size: 1.8rem; font-weight: 600; margin: 0 0 1rem 0; }
-        .post-title a { text-decoration: none; color: var(--text-color); }
-        .post-excerpt { font-size: 1rem; color: var(--muted-text-color); line-height: 1.7; margin-bottom: 1.5rem; }
-        .read-more-btn {
-            display: inline-block; background-color: var(--accent-color); color: white;
-            padding: 0.7rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;
+        .post-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .post-category { 
+            background-color: #e9ecef;
+            color: var(--muted-text-color); 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 0.8rem; 
+            font-weight: 600; 
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .post-category i { color: var(--accent-color); }
+        
+        .post-title { 
+            font-size: 1.8rem; 
+            font-weight: 600; 
+            margin: 0 0 1rem 0; 
+        }
+        .post-title a { 
+            text-decoration: none; 
+            color: var(--text-color); 
+            transition: color 0.2s ease;
+        }
+        .post-title a:hover { color: var(--accent-color); }
+
+        .post-excerpt { 
+            font-size: 1rem; 
+            color: var(--muted-text-color); 
+            line-height: 1.7; 
         }
         
+        .post-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .read-more-btn, .download-btn {
+            display: inline-flex; 
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.5rem; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: 600;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+            border: 1px solid transparent;
+            font-family: var(--font-primary);
+            font-size: 0.95rem;
+        }
+
+        .read-more-btn {
+            background-color: var(--accent-color); 
+            color: white;
+            border-color: var(--accent-color);
+        }
+        .read-more-btn:hover {
+            background-color: var(--accent-dark);
+            border-color: var(--accent-dark);
+        }
+
+        .download-btn {
+            background-color: var(--card-color); 
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .download-btn:hover {
+            background-color: #e9f2ff; /* A light blue hover effect */
+        }
+
         .voltar-container { text-align: center; margin-top: 4rem; }
-        .btn-voltar { display: inline-block; background-color: var(--muted-text-color); color: #ffffff; padding: 0.8rem 1.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .btn-voltar { display: inline-block; background-color: var(--muted-text-color); color: #ffffff; padding: 0.8rem 1.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background-color 0.2s ease; }
+        .btn-voltar:hover { background-color: var(--text-color); }
+
+        footer { width: 100%; margin-top: 5rem; padding: 2rem; background-color: #212529; color: #adb5bd; font-size: 0.9rem; box-sizing: border-box; text-align: center; }
+        .footer-content { max-width: 1100px; margin: 0 auto; }
+        .footer-content p { margin: 0 0 1rem 0; }
+        .security-seals { display: flex; justify-content: center; align-items: center; gap: 20px; }
+        .security-seals i { font-size: 35px; opacity: 0.7; }
     </style>
 </head>
 <body>
+    <header class="site-header">
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-user-secret"></i>
+            Investiga Digital
+        </a>
+    </header>
 
     <main class="container">
-        <h1>📚 Tutoriais e Artigos</h1>
-        <p class="subtitle">Aprenda técnicas e domine as ferramentas de investigação com nossos guias práticos e vídeos.</p>
+        <h1><i class="fa-solid fa-graduation-cap"></i> Biblioteca de Aprendizado</h1>
+        <p class="subtitle">Aprenda técnicas e domine as ferramentas de investigação com nossos guias práticos, vídeos e recomendações.</p>
         
-        <div class="posts-list">
-            
-            <article class="post-card">
-                <a href="#" class="post-thumbnail">
-                    <img src="https://placehold.co/800x450/2c3e50/ffffff?text=Video+Thumbnail" alt="Thumbnail do vídeo">
-                    <div class="play-icon"><i class="fa-brands fa-youtube"></i></div>
-                </a>
-                <div class="post-content">
-                    <div class="post-meta">
-                        <span class="post-category">Ferramentas</span>
-                        <span class="post-date">7 de agosto de 2025</span>
+        <section class="category-section">
+            <h2><i class="fa-solid fa-book-bookmark"></i>Referências & Doutrina</h2>
+            <div class="posts-list">
+                <article class="post-card">
+                    <a href="#" class="post-thumbnail">
+                        <img src="https://placehold.co/800x400/6f42c1/ffffff?text=Dicionário" alt="Dicionário do Investigador">
+                    </a>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-category"><i class="fa-solid fa-spell-check"></i>Glossário</span>
+                        </div>
+                        <h2 class="post-title"><a href="#">Dicionário do Investigador: Termos Essenciais</a></h2>
+                        <p class="post-excerpt">Consulte definições claras sobre: OSINT, OPSEC, SOCMINT, metadados, hash, steganografia, vishing, smishing e muito mais.</p>
+                        <div class="post-actions">
+                            <a href="#" class="read-more-btn">Consultar o Dicionário <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
                     </div>
-                    <h2 class="post-title"><a href="#">Vídeo: Análise de Hash na Prática com a Nossa Ferramenta</a></h2>
-                    <p class="post-excerpt">Neste vídeo, demonstramos passo a passo como utilizar o Calculador de Hash para garantir a integridade de evidências digitais e como gerar um relatório técnico completo para anexar aos autos do inquérito.</p>
-                    <a href="#" class="read-more-btn">Assista no YouTube <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </article>
-            
-            <article class="post-card">
-                <a href="#" class="post-thumbnail">
-                    <img src="https://placehold.co/800x450/3498db/ffffff?text=Artigo" alt="Imagem de capa do artigo">
-                </a>
-                <div class="post-content">
-                    <div class="post-meta">
-                        <span class="post-category">Perícia de Imagem</span>
-                        <span class="post-date">1 de agosto de 2025</span>
+                </article>
+                <article class="post-card">
+                    <a href="#" class="post-thumbnail">
+                        <img src="https://placehold.co/800x400/007bff/ffffff?text=Leis" alt="Leis para Investigação">
+                    </a>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-category"><i class="fa-solid fa-gavel"></i>Legislação</span>
+                        </div>
+                        <h2 class="post-title"><a href="#">Leis Essenciais para a Investigação Digital no Brasil</a></h2>
+                        <p class="post-excerpt">Navegue pelas leis mais importantes que regem o ambiente digital. Um resumo prático sobre o Marco Civil da Internet, Lei de Interceptação e LGPD.</p>
+                        <div class="post-actions">
+                            <a href="#" class="read-more-btn">Ver Resumo Jurídico <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
                     </div>
-                    <h2 class="post-title"><a href="#">Como Usar o ExifTool para Revelar Metadados Ocultos</a></h2>
-                    <p class="post-excerpt">Aprenda a usar o ExifTool, uma das ferramentas mais poderosas para perícia, para extrair informações valiosas escondidas em arquivos de imagem, como coordenadas GPS, data, hora e o dispositivo que capturou a foto.</p>
-                    <a href="#" class="read-more-btn">Leia o Artigo Completo <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </article>
+                </article>
+            </div>
+        </section>
 
-        </div>
+        <section class="category-section">
+            <h2><i class="fa-solid fa-newspaper"></i>Notícias & Estudos de Caso</h2>
+            <div class="posts-list">
+                <article class="post-card">
+                    <a href="#" class="post-thumbnail">
+                        <img src="https://placehold.co/800x400/ffc107/ffffff?text=Notícia+Global" alt="Notícia Global">
+                    </a>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-category"><i class="fa-solid fa-landmark"></i>Análise & Mídia</span>
+                        </div>
+                        <h2 class="post-title"><a href="#">[MÍDIA] Novo Tratado Internacional e o Acesso a Dados</a></h2>
+                        <p class="post-excerpt">Análise do novo Acordo de Cooperação Digital Global, que promete agilizar a obtenção de dados de empresas de tecnologia estrangeiras.</p>
+                        <div class="post-actions">
+                            <a href="#" class="read-more-btn">Leia na Fonte Original <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+                 <article class="post-card">
+                    <a href="#" class="post-thumbnail">
+                        <img src="https://placehold.co/800x400/fd7e14/ffffff?text=Alerta+de+Ameaça" alt="Alerta de Ameaça Cibernética">
+                    </a>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-category"><i class="fa-solid fa-shield-virus"></i>Cibersegurança</span>
+                        </div>
+                        <h2 class="post-title"><a href="#">Alerta: Phishing Usa IA para Clonar Voz de Executivos</a></h2>
+                        <p class="post-excerpt">Investigadores alertam para um aumento em golpes de "vishing" (voice phishing), onde a IA é usada para imitar vozes em tempo real.</p>
+                         <div class="post-actions">
+                            <a href="#" class="read-more-btn">Entenda a Ameaça <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+        
+        <section class="category-section">
+            <h2><i class="fa-solid fa-person-chalkboard"></i>Guias, Tutoriais & Técnicas</h2>
+            <div class="posts-list">
+                 <article class="post-card">
+                    <a href="#" class="post-thumbnail">
+                        <img src="https://placehold.co/800x400/0d6efd/ffffff?text=IA+em+Ação" alt="Inteligência Artificial">
+                        <div class="play-icon"><i class="fa-brands fa-youtube"></i></div>
+                    </a>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-category"><i class="fa-solid fa-brain"></i>Inteligência Artificial</span>
+                        </div>
+                        <h2 class="post-title"><a href="#">Guia Prático: Usando IA para Análise de Dados</a></h2>
+                        <p class="post-excerpt">Aprenda a usar LLMs para resumir depoimentos, identificar padrões em planilhas e gerar relatórios preliminares de forma automatizada.</p>
+                        <div class="post-actions">
+                            <a href="#" class="read-more-btn">Assista ao Vídeo <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+                <article class="post-card">
+                    <a href="#" class="post-thumbnail">
+                        <img src="https://placehold.co/800x400/dc3545/ffffff?text=OPSEC" alt="Segurança Operacional">
+                    </a>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-category"><i class="fa-solid fa-user-shield"></i>Segurança Operacional</span>
+                        </div>
+                        <h2 class="post-title"><a href="#">Guia de Segurança na Internet para Agentes Públicos</a></h2>
+                        <p class="post-excerpt">Protocolos essenciais para proteger sua identidade, dados e comunicações em ambientes digitais hostis, evitando a exposição de informações.</p>
+                        <div class="post-actions">
+                            <a href="#" class="read-more-btn">Leia o Artigo</a>
+                            <a href="#" class="download-btn">Baixar PDF <i class="fa-solid fa-file-pdf"></i></a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
 
         <div class="voltar-container">
-            <a href="https://combatcop.github.io/investigadigital/" class="btn-voltar">← Voltar à Página Inicial</a>
+            <a href="index.html" class="btn-voltar">← Voltar à Página Inicial</a>
         </div>
     </main>
 
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="year">2025</span> Investiga Digital – Desenvolvido por Pedro Henrique.</p>
+            <div class="security-seals">
+                <i class="fa-solid fa-shield-halved" title="Site Seguro (SSL)"></i>
+                <i class="fa-solid fa-lock" title="Conexão Segura"></i>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
+

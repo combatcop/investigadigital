@@ -3,517 +3,611 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sherlock Socket Puppet</title>
+    <title>Criador de Perfis (Socket Puppet) - Investiga Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        :root {
+            --background-color: #f8f9fa;
+            --card-color: #ffffff;
+            --border-color: #dee2e6;
+            --text-color: #212529;
+            --muted-text-color: #6c757d;
+            --accent-color: #0d6efd;
+            --accent-dark: #0b5ed7;
+            --success-color: #198754;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --font-primary: 'Poppins', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: var(--font-primary);
+            font-weight: 400;
             margin: 0;
-            padding: 10px;
-            background-color: #f4f4f4;
-            color: #333;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
+        
+        .site-header {
+            width: 100%;
+            background-color: var(--card-color);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            padding: 1rem 2rem;
+            margin-bottom: 3rem;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .site-header .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+        .site-header .logo i {
+            color: var(--accent-color);
+            margin-right: 0.5rem;
+        }
+
         .container {
-            background-color: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
-            margin: 20px auto;
-            display: none; /* Hidden by default until terms are accepted */
+            max-width: 1100px;
+            width: 100%;
+            padding: 0 2rem;
+            box-sizing: border-box;
+            flex-grow: 1;
         }
-        h1, h2 {
-            color: #2c3e50;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 20px;
-            font-size: 1.5em;
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            text-align: center;
         }
+        
         h2 {
-            font-size: 1.3em;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
         }
+        
+        h3 {
+             font-size: 1.1rem;
+             font-weight: 600;
+             margin-top: 1.5rem;
+             margin-bottom: 0.8rem;
+        }
+
+        .subtitle {
+            color: var(--muted-text-color);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        
         .section {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-left: 5px solid #3498db;
-            border-radius: 4px;
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
         }
-        .section label {
+        
+        label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 600;
         }
-        .section input[type="text"],
-        .section input[type="date"],
-        .section textarea,
-        .section select {
+
+        input[type="text"],
+        input[type="password"],
+        textarea,
+        select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             box-sizing: border-box;
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            background-color: #fff;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .section input[type="radio"],
-        .section input[type="checkbox"] {
-            margin-right: 5px;
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
         }
-        .radio-group label {
+        
+        .radio-group, .checkbox-group {
+            margin-bottom: 1rem;
+        }
+
+        .radio-group label, .checkbox-group label {
             font-weight: normal;
-            display: inline-block;
-            margin-right: 15px;
-        }
-        .checkbox-group label {
-            font-weight: normal;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .sub-options {
-            padding-left: 20px;
-            margin-top: 10px;
-            border-left: 3px solid #ddd;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            margin-right: 1.5rem;
+            margin-bottom: 0.5rem;
             cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            display: block;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 0.5rem;
+            accent-color: var(--accent-color);
+            width: 1.1em;
+            height: 1.1em;
+        }
+        
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            transition: background-color 0.2s ease;
             width: 100%;
-            margin-top: 20px;
         }
+
         button:hover {
-            background-color: #218838;
+            background-color: var(--accent-dark);
         }
-        #outputPrompt {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
+
+        button:disabled {
+            background-color: #aeb8c4;
+            cursor: not-allowed;
         }
-        #copyButton {
-            background-color: #007bff;
-            margin-top: 10px;
-        }
-        #copyButton:hover {
-            background-color: #0056b3;
-        }
-        .ia-buttons-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-            margin-top: 15px;
-            margin-bottom: 20px;
-        }
-        .ia-buttons-container button {
-            width: 100%; padding: 10px 15px; font-size: 14px; text-align: center; display: block; margin: 0;
-        }
-        .ia-buttons-container button.chatgpt-btn { background-color: #6a5acd; }
-        .ia-buttons-container button.chatgpt-btn:hover { background-color: #5b4bbf; }
-        .ia-buttons-container button.gemini-btn { background-color: #f4b400; color: #333; }
-        .ia-buttons-container button.gemini-btn:hover { background-color: #e3a500; }
-        .ia-buttons-container button.copilot-btn { background-color: #0078d4; }
-        .ia-buttons-container button.copilot-btn:hover { background-color: #005a9e; }
+        
         .info-text {
             font-size: 0.9em;
-            color: #666;
-            margin-top: -5px;
-            margin-bottom: 10px;
+            color: var(--muted-text-color);
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
         }
-        .info-text.security-warning {
-            color: #c0392b;
-            font-weight: bold;
-        }
-        .input-group {
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 4px;
-            background-color: #f0f0f0;
-        }
-        .footer {
-            margin-top: 30px;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.8em;
-            color: #777;
-        }
+        
         .modal {
-            display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); padding-top: 60px;
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6);
         }
         .modal-content {
-            background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 90%; max-width: 600px; border-radius: 8px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            background-color: var(--card-color); margin: 10% auto; padding: 2rem; border: 1px solid var(--border-color); width: 90%; max-width: 600px; border-radius: 12px; position: relative;
         }
-        .close-button {
-            color: #aaa; float: right; font-size: 28px; font-weight: bold; position: absolute; top: 10px; right: 20px;
+        
+        .terms-acceptance {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
-        .close-button:hover, .close-button:focus { color: black; text-decoration: none; cursor: pointer; }
-        .explanation-button { background-color: #3498db; margin-bottom: 20px; }
-        .explanation-button:hover { background-color: #2980b9; }
 
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 15px;
-            }
-            .radio-group label {
-                display: block;
-                margin-bottom: 10px;
-            }
-            .ia-buttons-container {
-                flex-direction: column;
-            }
+        .terms-checkbox-group {
+            display: flex;
+            align-items: center;
         }
-        @media (max-width: 480px) {
-            body {
-                padding: 5px;
-            }
-            h1 { font-size: 1.3em; }
-            h2 { font-size: 1.1em; }
-            .container, .section {
-                padding: 10px;
-            }
+
+        .terms-checkbox-group label {
+            margin: 0;
+            font-weight: normal;
         }
+        
+        .link-button {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            width: auto;
+        }
+        .link-button:hover {
+            color: var(--accent-dark);
+            background: none;
+        }
+        
+        .voltar-container { text-align: center; margin-top: 4rem; }
+        .btn-voltar { display: inline-block; background-color: var(--muted-text-color); color: #ffffff; padding: 0.8rem 1.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background-color 0.2s ease; }
+        .btn-voltar:hover { background-color: var(--text-color); }
+        
+        footer { width: 100%; margin-top: 5rem; padding: 2rem; background-color: #212529; color: #adb5bd; font-size: 0.9rem; box-sizing: border-box; text-align: center; }
+        .footer-content { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .footer-content p { margin: 0 0 1rem 0; }
+        .security-seals { display: flex; justify-content: center; align-items: center; gap: 20px; }
+        .security-seals i { font-size: 35px; opacity: 0.7; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        #apiResult h4 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            color: var(--accent-dark);
+        }
+        #apiResult ul {
+            list-style-type: '✓  ';
+            padding-left: 1.2rem;
+        }
+        #apiResult li {
+            margin-bottom: 0.5rem;
+        }
+        .copy-section-btn {
+            background-color: #e9ecef;
+            color: var(--muted-text-color);
+            padding: 0.3rem 0.7rem;
+            font-size: 0.8rem;
+            width: auto;
+            border: 1px solid var(--border-color);
+        }
+        .copy-section-btn:hover {
+            background-color: #dee2e6;
+        }
+        .output-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .output-actions button {
+            background-color: var(--success-color);
+        }
+
     </style>
 </head>
 <body>
-    <div id="termsOfUseModal" class="modal" style="display: block;">
+    <header class="site-header">
+        <a href="https://investigadigital.com/" class="logo">
+            <i class="fa-solid fa-user-secret"></i>
+            Investiga Digital
+        </a>
+    </header>
+
+    <div id="termsOfUseModal" class="modal">
         <div class="modal-content">
-            <h2>Termos de Uso do Sherlock Socket Puppet</h2>
-            <div class="terms-content-scroll"> <p>Esta aplicação, <strong>Sherlock Socket Puppet</strong>, foi desenvolvida com o intuito de ser uma ferramenta auxiliar para agentes de inteligência e investigadores no combate ao crime organizado e outras atividades ilícitas.</p>
-                <p>A funcionalidade principal da aplicação é facilitar a criação de perfis fictícios ("Socket Puppets") para fins de investigação.</p>
-                <p>Ao utilizar esta ferramenta, o usuário <strong>declara-se ciente e concorda</strong> que:</p>
-                <ul>
-                    <li>O uso da técnica "Socket Puppet" deve ser conduzido com <strong>extrema responsabilidade</strong>.</li>
-                    <li>Todas as ações devem <strong>respeitar as leis vigentes</strong>.</li>
-                    <li>A <strong>responsabilidade legal e ética</strong> pelo uso da aplicação é <strong>inteiramente do usuário</strong>.</li>
-                    <li>Esta ferramenta é um <strong>suporte operacional</strong> e não substitui o treinamento e a autorização legal.</li>
-                </ul>
-                <p><strong>Aceite estes termos para prosseguir.</strong></p>
-            </div>
-            <button id="acceptTermsBtn">Aceitar e Continuar</button>
+            <h2>Termos de Uso do Criador de Perfis</h2>
+            <p>Esta aplicação é uma ferramenta auxiliar para agentes de inteligência e investigadores. A funcionalidade principal é facilitar a criação de perfis fictícios ("Socket Puppets") para fins de investigação.</p>
+            <p>Ao utilizar esta ferramenta, você <strong>declara-se ciente e concorda</strong> que:</p>
+            <ul>
+                <li>O uso da técnica "Socket Puppet" deve ser conduzido com <strong>extrema responsabilidade</strong>.</li>
+                <li>Todas as ações devem <strong>respeitar as leis vigentes</strong>.</li>
+                <li>A <strong>responsabilidade legal e ética</strong> pelo uso da aplicação é <strong>inteiramente sua</strong>.</li>
+            </ul>
+            <p><strong>Aceite estes termos para prosseguir.</strong></p>
+            <button id="acceptTermsBtn">Entendido, fechar e aceitar</button>
         </div>
     </div>
 
-    <div class="container">
-        <h1>Sherlock Socket Puppet</h1>
-        <p>Preencha as informações para gerar um perfil fictício completo para uma persona digital ou para memorização em missão de campo.</p>
+    <main class="container" style="display: block;">
+        <h1><i class="fa-solid fa-masks-theater"></i> Criador de Perfis (Socket Puppet)</h1>
+        <p class="subtitle">Preencha as informações para gerar um dossiê completo para uma persona digital ou para memorização em missão de campo.</p>
         
-        <button type="button" id="openExplanationModal" class="explanation-button">O que é a Técnica "Socket Puppet"?</button>
-
         <form id="profileForm">
             <div class="section">
                 <h2>1. Tipo de Perfil e Informações Básicas</h2>
-                <label>Finalidade do perfil:</label>
+                <h3>Finalidade do perfil:</h3>
                 <div class="radio-group">
-                    <input type="radio" id="profileTypeInternet" name="profileType" value="internet" checked>
-                    <label for="profileTypeInternet">Criação de perfil para utilizar na internet</label>
-                    <input type="radio" id="profileTypeMission" name="profileType" value="mission">
-                    <label for="profileTypeMission">Missão de campo (memorização)</label>
+                    <input type="radio" id="profileTypeInternet" name="profileType" value="internet" checked> <label for="profileTypeInternet">Utilizar na internet</label>
+                    <input type="radio" id="profileTypeMission" name="profileType" value="mission"> <label for="profileTypeMission">Missão de campo (memorização)</label>
                 </div>
 
-                <label style="margin-top: 15px;">Características Físicas, Gênero, etc.:</label>
+                <h3>Características Físicas, Gênero, etc.:</h3>
                 <div class="radio-group">
-                    <input type="radio" id="charOptionGenerate" name="charOption" value="gerar" checked>
-                    <label for="charOptionGenerate">Gerar aleatoriamente</label>
-                    <input type="radio" id="charOptionProvide" name="charOption" value="fornecer">
-                    <label for="charOptionProvide">Usar os que vou fornecer</label>
-                    <input type="radio" id="charOptionNone" name="charOption" value="nao_preciso">
-                    <label for="charOptionNone">Não preciso</label>
+                    <input type="radio" id="charOptionGenerate" name="charOption" value="gerar" checked> <label for="charOptionGenerate">Gerar aleatoriamente</label>
+                    <input type="radio" id="charOptionProvide" name="charOption" value="fornecer"> <label for="charOptionProvide">Usar os que vou fornecer</label>
+                    <input type="radio" id="charOptionNone" name="charOption" value="nao_preciso"> <label for="charOptionNone">Não preciso</label>
                 </div>
-                <div id="physicalCharacteristicsSection" class="input-group" style="display: none;">
+                 <div id="physicalCharacteristicsSection" style="display: none;">
                     <label>Gênero:</label>
-                    <select id="genderSelect"><option value="">Selecione</option><option value="Masculino">Masculino</option><option value="Feminino">Feminino</option><option value="Não-Binário">Não-Binário</option><option value="Outro">Outro</option></select>
-                    <input type="text" id="genderOther" placeholder="Especifique o gênero" style="display: none;">
-                    <label>Cor do Cabelo:</label>
-                    <select id="hairColorSelect"><option value="">Selecione</option><option value="Preto">Preto</option><option value="Castanho">Castanho</option><option value="Loiro">Loiro</option><option value="Ruivo">Ruivo</option><option value="Grisalho">Grisalho</option><option value="Outro">Outro</option></select>
-                    <input type="text" id="hairColorOther" placeholder="Especifique a cor do cabelo" style="display: none;">
-                    <label>Cor dos Olhos:</label>
-                    <select id="eyeColorSelect"><option value="">Selecione</option><option value="Castanho">Castanho</option><option value="Azul">Azul</option><option value="Verde">Verde</option><option value="Mel">Mel</option><option value="Outro">Outro</option></select>
-                    <input type="text" id="eyeColorOther" placeholder="Especifique a cor dos olhos" style="display: none;">
-                    <label for="height">Altura (cm):</label><input type="text" id="height" placeholder="Ex: 175">
-                    <label for="weight">Peso (kg):</label><input type="text" id="weight" placeholder="Ex: 70">
-                    <label for="tattoosPiercings">Tatuagens/Piercings/Marcas:</label><textarea id="tattoosPiercings" placeholder="Descreva marcas distintivas." rows="2"></textarea>
-                    <label for="otherPhysicalCharacteristics">Outras características físicas:</label><textarea id="otherPhysicalCharacteristics" placeholder="Ex: porte, biotipo, deficiências." rows="2"></textarea>
-                </div>
+                    <select id="genderSelect"><option value="">Selecione</option><option value="Masculino">Masculino</option><option value="Feminino">Feminino</option></select>
+                    
+                    <div class="grid-2">
+                        <div>
+                            <label for="ageInput">Idade (aproximada):</label>
+                            <input type="text" id="ageInput" placeholder="Ex: 25-30">
+                        </div>
+                        <div>
+                            <label for="heightInput">Altura (cm):</label>
+                            <input type="text" id="heightInput" placeholder="Ex: 175">
+                        </div>
+                    </div>
 
-                <label style="margin-top: 15px;">Documentos (RG, CPF, etc.):</label>
-                <div class="radio-group">
-                    <input type="radio" id="docOptionProvide" name="docOption" value="fornecer_docs" checked><label for="docOptionProvide">Usar os fornecidos</label>
-                    <input type="radio" id="docOptionNone" name="docOption" value="nao_preciso_docs"><label for="docOptionNone">Não preciso</label>
+                    <div class="grid-2">
+                        <div>
+                            <label for="weightInput">Peso (kg):</label>
+                            <input type="text" id="weightInput" placeholder="Ex: 70">
+                        </div>
+                        <div>
+                            <label for="hairColorSelect">Cor do Cabelo:</label>
+                            <select id="hairColorSelect">
+                                <option value="">Selecione</option><option value="Preto">Preto</option><option value="Castanho">Castanho</option><option value="Loiro">Loiro</option><option value="Ruivo">Ruivo</option><option value="Grisalho">Grisalho</option><option value="Outro">Outro</option>
+                            </select>
+                            <input type="text" id="hairColorOther" placeholder="Especifique a cor do cabelo" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <label for="eyeColorSelect">Cor dos Olhos:</label>
+                    <select id="eyeColorSelect">
+                        <option value="">Selecione</option><option value="Castanho">Castanho</option><option value="Azul">Azul</option><option value="Verde">Verde</option><option value="Mel">Mel</option><option value="Outro">Outro</option>
+                    </select>
+                    <input type="text" id="eyeColorOther" placeholder="Especifique a cor dos olhos" style="display: none;">
+
+                    <label for="tattoosPiercings">Tatuagens/Marcas/Cicatrizes:</label>
+                    <textarea id="tattoosPiercings" placeholder="Descreva marcas distintivas." rows="2"></textarea>
                 </div>
-                <div id="providedDocsSection" class="input-group">
-                    <label for="providedRG">RG:</label><input type="text" id="providedRG" placeholder="RG">
-                    <label for="providedCPF">CPF:</label><input type="text" id="providedCPF" placeholder="CPF">
-                    <label for="providedCNH">CNH:</label><input type="text" id="providedCNH" placeholder="CNH">
-                    <label for="providedPassport">Passaporte:</label><input type="text" id="providedPassport" placeholder="Passaporte">
-                    <label for="providedOtherDocs">Outros:</label><input type="text" id="providedOtherDocs" placeholder="Ex: Título de Eleitor">
-                </div>
-                <p class="info-text digital-only-item">Sugestão: Para gerar documentos válidos, visite: <a href="https://www.4devs.com.br/gerador_de_pessoas" target="_blank">4devs.com.br</a></p>
+            </div>
+            
+            <div id="digitalPresenceSection">
+                 <div class="section">
+                    <h2>2. Presença Digital (Opcional)</h2>
+                    <h3>Plataformas de Redes Sociais</h3>
+                    <p class="info-text">Selecione para quais plataformas a IA deve gerar sugestões de perfil (nomes, bios, conteúdo inicial, etc.).</p>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="socialFacebook" name="socialMedia" value="Facebook"><label for="socialFacebook">Facebook</label>
+                        <input type="checkbox" id="socialInstagram" name="socialMedia" value="Instagram"><label for="socialInstagram">Instagram</label>
+                        <input type="checkbox" id="socialX" name="socialMedia" value="X (Twitter)"><label for="socialX">X (Twitter)</label>
+                        <input type="checkbox" id="socialTikTok" name="socialMedia" value="TikTok"><label for="socialTikTok">TikTok</label>
+                        <input type="checkbox" id="socialWhatsApp" name="socialMedia" value="WhatsApp"><label for="socialWhatsApp">WhatsApp</label>
+                        <input type="checkbox" id="socialTelegram" name="socialMedia" value="Telegram"><label for="socialTelegram">Telegram</label>
+                    </div>
+
+                    <h3>Credenciais Fictícias</h3>
+                    <div class="grid-2">
+                        <div>
+                            <label for="emailProviderSelect">Provedor de E-mail:</label>
+                             <select id="emailProviderSelect">
+                                <option value="qualquer">Qualquer um (sugestão da IA)</option>
+                                <option value="Gmail">Gmail</option>
+                                <option value="Outlook">Outlook</option>
+                                <option value="ProtonMail">ProtonMail</option>
+                             </select>
+                        </div>
+                        <div>
+                            <label>Gerar Senha Fictícia?</label>
+                             <div class="checkbox-group">
+                                <input type="checkbox" id="suggestPassword" name="suggestPassword" value="sim"><label for="suggestPassword">Sim, gerar sugestão</label>
+                             </div>
+                        </div>
+                    </div>
+                     <p class="info-text" style="color: #dc3545;"><strong>Atenção:</strong> A senha sugerida é apenas para a história de cobertura. NUNCA a utilize em contas reais.</p>
+                 </div>
             </div>
 
             <div class="section">
-                <h2>2. Nacionalidade e Localização do Perfil</h2>
-                <label>Nacionalidade do perfil:</label>
+                <h2>3. Detalhes da Persona</h2>
+                <h3>Nacionalidade e Localização</h3>
                 <div class="radio-group">
                     <input type="radio" id="nationalityStandard" name="nationality" value="Brasileira" checked><label for="nationalityStandard">Brasileira (Padrão)</label>
                     <input type="radio" id="nationalityOther" name="nationality" value="Outro"><label for="nationalityOther">Outro</label>
-                    <input type="text" id="otherNationality" placeholder="Digite o país. Ex: Americana" style="display: none;">
                 </div>
-                <div id="brazilianLocationSection" class="input-group" style="display: block;">
-                    <label>Estado (se Brasileira):</label>
-                    <select id="stateSelect"><option value="">Selecione um Estado</option><option value="AC">Acre</option><option value="AL">Alagoas</option><option value="AP">Amapá</option><option value="AM">Amazonas</option><option value="BA">Bahia</option><option value="CE">Ceará</option><option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option><option value="GO">Goiás</option><option value="MA">Maranhão</option><option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option><option value="MG">Minas Gerais</option><option value="PA">Pará</option><option value="PB">Paraíba</option><option value="PR">Paraná</option><option value="PE">Pernambuco</option><option value="PI">Piauí</option><option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option><option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option><option value="RR">Roraima</option><option value="SC">Santa Catarina</option><option value="SP">São Paulo</option><option value="SE">Sergipe</option><option value="TO">Tocantins</option></select>
-                    <div id="cityContainer" style="display: none;">
-                         <label>Cidade:</label>
-                         <select id="citySelect"><option value="">Aguardando seleção do estado...</option></select>
-                         <input type="text" id="cityOther" placeholder="Especifique a cidade" style="display: none;">
+                <input type="text" id="otherNationality" placeholder="Digite o país. Ex: Americana" style="display: none;">
+
+                <div id="brazilianLocationSection">
+                    <label>Estado, Cidade e Região (se Brasileira):</label>
+                    <div class="grid-2">
+                        <select id="stateSelect"><option value="">Selecione um Estado</option><option value="AC">Acre</option><option value="AL">Alagoas</option><option value="AP">Amapá</option><option value="AM">Amazonas</option><option value="BA">Bahia</option><option value="CE">Ceará</option><option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option><option value="GO">Goiás</option><option value="MA">Maranhão</option><option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option><option value="MG">Minas Gerais</option><option value="PA">Pará</option><option value="PB">Paraíba</option><option value="PR">Paraná</option><option value="PE">Pernambuco</option><option value="PI">Piauí</option><option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option><option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option><option value="RR">Roraima</option><option value="SC">Santa Catarina</option><option value="SP">São Paulo</option><option value="SE">Sergipe</option><option value="TO">Tocantins</option></select>
+                        <input type="text" id="cityInput" placeholder="Cidade">
                     </div>
-                    <div id="regionContainer" style="display: none;">
-                        <label>Região/Área da Capital:</label>
-                        <select id="regionSelect"><option value="">Aguardando seleção da cidade...</option></select>
-                        <input type="text" id="regionOther" placeholder="Especifique a região" style="display: none;">
-                   </div>
+                     <select id="regionSelect" style="display: none; margin-top: 1rem;"><option value="">Selecione a Região/Área</option></select>
                 </div>
-            </div>
-
-            <div class="section">
-                <h2>3. Personalidade e Estilo</h2>
-                 <label>Estilo de comunicação:</label>
-                <div class="radio-group">
-                    <input type="radio" id="commStyleGenerate" name="commStyleOption" value="gerar" checked> <label for="commStyleGenerate">Gerar aleatoriamente</label>
-                    <input type="radio" id="commStyleProvide" name="commStyleOption" value="fornecer"> <label for="commStyleProvide">Usar os que vou fornecer</label>
-                    <input type="radio" id="commStyleNone" name="commStyleOption" value="nao_preciso"> <label for="commStyleNone">Não preciso</label>
-                </div>
-                <div id="communicationStyleSection" class="input-group" style="display: none;">
-                    <label>Estilo Predominante:</label>
-                    <select id="communicationStyleSelect">
-                        <option value="">Selecione</option> <option value="Formal">Formal</option> <option value="Descontraído">Descontraído</option> <option value="Gírias">Gírias</option> <option value="Técnico">Técnico</option> <option value="Agressivo">Agressivo</option> <option value="Passivo">Passivo</option> <option value="Persuasivo">Persuasivo</option> <option value="Outro">Outro</option>
-                    </select>
-                    <input type="text" id="communicationStyleOther" placeholder="Especifique outro estilo" style="display: none;">
-                    <label for="communicationStyleDetails">Detalhes do Estilo:</label> <textarea id="communicationStyleDetails" placeholder="Ex: Linguagem culta, uso de internetês, tom sarcástico." rows="2"></textarea>
-                </div>
-
-                <label style="margin-top: 15px;">Gírias ou expressões típicas:</label>
-                <div class="radio-group">
-                    <input type="radio" id="slangOptionGenerate" name="slangOption" value="gerar" checked> <label for="slangOptionGenerate">Gerar aleatoriamente</label>
-                    <input type="radio" id="slangOptionProvide" name="slangOption" value="fornecer"> <label for="slangOptionProvide">Usar as que vou fornecer</label>
-                    <input type="radio" id="slangOptionNone" name="slangOption" value="nao_preciso"> <label for="slangOptionNone">Não preciso</label>
-                </div>
-                <div id="typicalSlangsSection" class="input-group" style="display: none;">
-                    <label for="typicalSlangsInput">Gírias/Expressões:</label> <textarea id="typicalSlangsInput" placeholder="Ex: 'Mano', 'Tá ligado?', 'Partiu'" rows="2"></textarea>
-                </div>
-
-                <label style="margin-top: 15px;">Hobbies e interesses:</label>
-                <div class="radio-group">
-                    <input type="radio" id="hobbiesOptionGenerate" name="hobbiesOption" value="gerar" checked> <label for="hobbiesOptionGenerate">Gerar aleatoriamente</label>
-                    <input type="radio" id="hobbiesOptionProvide" name="hobbiesOption" value="fornecer"> <label for="hobbiesOptionProvide">Usar os que vou fornecer</label>
-                    <input type="radio" id="hobbiesOptionNone" name="hobbiesOption" value="nao_preciso"> <label for="hobbiesOptionNone">Não preciso</label>
-                </div>
-                <div id="hobbiesInterestsSection" class="input-group" style="display: none;">
-                    <label for="hobbiesInterestsInput">Hobbies/Interesses:</label> <textarea id="hobbiesInterestsInput" placeholder="Ex: Jogos online, esportes radicais, culinária, música." rows="2"></textarea>
-                </div>
-
-                <div id="politicalAffiliationSection" class="input-group" style="margin-top: 15px;">
-                    <label for="politicalPartySelect">Posicionamento Político:</label>
-                    <select id="politicalPartySelect"><option value="">Selecione ou deixe em branco</option><option value="Nenhum/Apolítico">Nenhum/Apolítico</option><option value="Esquerda">Esquerda (Geral)</option><option value="Centro-Esquerda">Centro-Esquerda</option><option value="Centro">Centro</option><option value="Centro-Direita">Centro-Direita</option><option value="Direita">Direita (Geral)</option><option value="Liberal">Liberal</option><option value="Conservador">Conservador</option><option value="PT">PT</option><option value="PL">PL</option><option value="PSOL">PSOL</option><option value="Outro">Outro (especificar)</option></select>
-                    <input type="text" id="politicalPartyOther" placeholder="Especifique o partido ou ideologia" style="display: none;">
-                </div>
-
-                <div id="footballTeamSection" class="input-group" style="margin-top: 15px;">
-                    <label for="footballTeamSelect">Time de Futebol:</label>
-                    <select id="footballTeamSelect"><option value="">Selecione ou deixe em branco</option><option value="Não se interessa por futebol">Não se interessa por futebol</option><option value="Flamengo">Flamengo</option><option value="Corinthians">Corinthians</option><option value="São Paulo">São Paulo</option><option value="Palmeiras">Palmeiras</option><option value="Vasco da Gama">Vasco da Gama</option><option value="Outro">Outro (especificar)</option></select>
-                    <input type="text" id="footballTeamOther" placeholder="Especifique o time" style="display: none;">
-                </div>
-
-                <label style="margin-top: 15px;">Estilo de vestimenta:</label>
-                <div class="radio-group">
-                    <input type="radio" id="dressStyleOptionGenerate" name="dressStyleOption" value="gerar" checked> <label for="dressStyleOptionGenerate">Gerar aleatoriamente</label>
-                    <input type="radio" id="dressStyleOptionProvide" name="dressStyleOption" value="fornecer"> <label for="dressStyleProvide">Usar o que vou fornecer</label>
-                    <input type="radio" id="dressStyleOptionNone" name="dressStyleOption" value="nao_preciso"> <label for="dressStyleNone">Não preciso</label>
-                </div>
-                <div id="dressStyleSection" class="input-group" style="display: none;">
-                    <label for="dressStyleInput">Estilo:</label> <textarea id="dressStyleInput" placeholder="Ex: Casual urbano, social, esportivo." rows="2"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>4. Contexto da Operação</h2>
-                <label>Grupo ou indivíduo alvo da investigação:</label>
-                <select id="targetGroupSelect"><option value="">Selecione</option><option value="Organização Criminosa (Tráfico de Drogas)">Tráfico de Drogas</option><option value="Organização Criminosa (Estelionato)">Estelionato</option><option value="Facções Criminosas">Facções Criminosas</option><option value="Grupos Radicalizados/Terroristas">Radicalizados/Terroristas</option><option value="Outro">Outro</option></select>
-                <input type="text" id="targetGroupOther" placeholder="Especifique outro grupo" style="display: none;">
-
-                <label style="margin-top: 15px;">Objetivo da Operação:</label>
-                <select id="operationObjectiveSelect"><option value="">Selecione</option><option value="Coleta de Inteligência (Informações Gerais)">Coleta de Inteligência</option><option value="Identificação de Membros/Rede">Identificação de Membros/Rede</option><option value="Estabelecimento de Confiança">Estabelecimento de Confiança</option><option value="Levantamento de Provas">Levantamento de Provas</option><option value="Outro">Outro</option></select>
-                <input type="text" id="operationObjectiveOther" placeholder="Especifique outro objetivo" style="display: none;">
                 
-                <label style="margin-top: 15px;">Estratégia de Abordagem Inicial:</label>
-                <select id="initialApproachStrategySelect"><option value="">Selecione</option><option value="Infiltração Digital (Criação de Perfil)">Infiltração Digital</option><option value="Interação Casual em Ambiente de Interesse">Interação Casual</option><option value="Inserção por Contato Mútuo/Indicação">Inserção por Contato</option><option value="Outro">Outro</option></select>
-                <input type="text" id="initialApproachStrategyOther" placeholder="Especifique outra estratégia" style="display: none;">
+                <h3>Personalidade e Estilo</h3>
+                <div class="radio-group">
+                     <input type="radio" id="hobbiesOptionGenerate" name="hobbiesOption" value="gerar" checked> <label for="hobbiesOptionGenerate">Gerar Hobbies/Interesses aleatoriamente</label>
+                     <input type="radio" id="hobbiesOptionProvide" name="hobbiesOption" value="fornecer"> <label for="hobbiesOptionProvide">Fornecer Hobbies/Interesses</label>
+                </div>
+                <textarea id="hobbiesInterestsInput" placeholder="Ex: Jogos online, esportes radicais, culinária, música." rows="2" style="display:none;"></textarea>
 
-                <div class="digital-only-item">
-                    <label style="margin-top: 15px;">Plataformas digitais (a IA irá sugerir o conteúdo):</label>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="socialFacebook" name="socialMedia" value="Facebook"><label for="socialFacebook">Facebook (Sugerir Interesses como filmes/livros, páginas para seguir, texto "Sobre" e posts)</label>
-                        <input type="checkbox" id="socialInstagram" name="socialMedia" value="Instagram"><label for="socialInstagram">Instagram (Sugerir bio curta com emojis, temas para posts e estilo de foto)</label>
-                        <input type="checkbox" id="socialX" name="socialMedia" value="X (Twitter)"><label for="socialX">X (Twitter) (Sugerir bio, ideias de tweets e tipos de perfis para seguir)</label>
-                        <input type="checkbox" id="socialTikTok" name="socialMedia" value="TikTok"><label for="socialTikTok">TikTok (Sugerir bio e temas/estilo de vídeos)</label>
-                        <input type="checkbox" id="socialTelegram" name="socialMedia" value="Telegram"><label for="socialTelegram">Telegram (Sugerir nome de usuário e bio curta)</label>
-                        <input type="checkbox" id="socialDiscord" name="socialMedia" value="Discord"><label for="socialDiscord">Discord (Sugerir nome de usuário e "Sobre Mim")</label>
-                        <input type="checkbox" id="socialOther" name="socialMedia" value="Outros"><label for="socialOther">Outras plataformas:</label>
-                        <input type="text" id="otherSocialMedia" placeholder="Ex: LinkedIn, Fóruns" style="display: none;">
-                        <textarea id="otherSocialMediaRequirements" placeholder="Instruções para a IA sobre estas outras plataformas..." rows="2" style="display: none;"></textarea>
+                <div class="grid-2">
+                    <div>
+                         <label for="politicalViewSelect">Viés Político:</label>
+                         <select id="politicalViewSelect">
+                            <option value="">Selecione ou deixe em branco</option><option value="Nenhum / Apolítico">Nenhum / Apolítico</option><option value="Esquerda">Esquerda</option><option value="Centro-Esquerda">Centro-Esquerda</option><option value="Centro">Centro</option><option value="Centro-Direita">Centro-Direita</option><option value="Direita">Direita</option><option value="Liberal">Liberal</option><option value="Conservador">Conservador</option><option value="Outro">Outro (especificar)</option>
+                         </select>
+                         <input type="text" id="politicalViewOther" placeholder="Especifique o viés político" style="display: none;">
                     </div>
-                    <div class="sub-options">
-                        <label>Para as plataformas selecionadas, também gerar:</label>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="suggestUsername" name="suggestCredentials" value="username">
-                            <label for="suggestUsername">Sugestão de Nome de Usuário</label>
-                            <input type="checkbox" id="suggestPassword" name="suggestCredentials" value="password">
-                            <label for="suggestPassword">Sugestão de Senha (para história de cobertura)</label>
-                            <p class="info-text security-warning">AVISO: A senha gerada é para a história fictícia. NUNCA use senhas geradas por IA em contas reais.</p>
-                        </div>
+                     <div>
+                        <label for="footballTeamSelect">Time de Futebol:</label>
+                        <select id="footballTeamSelect">
+                            <option value="">Selecione ou deixe em branco</option><option value="Não se interessa por futebol">Não se interessa por futebol</option><option value="Flamengo">Flamengo</option><option value="Corinthians">Corinthians</option><option value="São Paulo">São Paulo</option><option value="Palmeiras">Palmeiras</option><option value="Vasco da Gama">Vasco da Gama</option><option value="Grêmio">Grêmio</option><option value="Internacional">Internacional</option><option value="Cruzeiro">Cruzeiro</option><option value="Atlético-MG">Atlético-MG</option><option value="Fluminense">Fluminense</option><option value="Botafogo">Botafogo</option><option value="Outro">Outro (especificar)</option>
+                        </select>
+                        <input type="text" id="footballTeamOther" placeholder="Especifique o time de futebol" style="display: none;">
                     </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>5. Dados Existentes da Investigação</h2>
-                <label>Deseja integrar dados pré-existentes da investigação ao perfil?</label>
-                <div class="radio-group">
-                    <input type="radio" id="preExistingDataYes" name="preExistingData" value="Sim"><label for="preExistingDataYes">Sim (inserir informações já coletadas)</label>
-                    <input type="radio" id="preExistingDataNo" name="preExistingData" value="Não" checked><label for="preExistingDataNo">Não (criação de perfil do zero)</label>
-                </div>
-                <div id="providedInvestigatorData" class="input-group" style="display: none;">
-                    <label for="investigatorReport">Breve relato da investigação:</label><textarea id="investigatorReport" rows="4" placeholder="Ex: 'O alvo é um homem de 30 anos, mora na Zona Leste de SP...'"></textarea>
-                    <label for="investigatorFullName">Nome completo (se souber):</label><input type="text" id="investigatorFullName" placeholder="Nome completo">
-                    <label for="investigatorAddress">Endereço (se souber):</label><input type="text" id="investigatorAddress" placeholder="Endereço completo">
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>6. Profissão/Ocupação</h2>
-                <p class="info-text">A escolha da profissão do perfil é crucial para a verossimilhança. O agente deve estar familiarizado com a área.</p>
-                <label>A profissão do perfil é conhecida ou deve ser sugerida?</label>
-                <div class="radio-group">
-                    <input type="radio" id="targetProfessionKnown" name="targetProfessionKnowledge" value="known" checked><label for="targetProfessionKnown">Já tenho uma em mente</label>
-                    <input type="radio" id="targetProfessionSuggest" name="targetProfessionKnowledge" value="suggest"><label for="targetProfessionSuggest">Sugerir uma profissão</label>
-                </div>
-                <div id="knownProfessionSection" class="input-group">
-                    <label for="knownProfessionInput">Profissão/Ocupação:</label><input type="text" id="knownProfessionInput" placeholder="Ex: Engenheiro de Software, Vendedor, Estudante">
-                    <label for="knownProfessionDetails">Detalhes da Profissão:</label><textarea id="knownProfessionDetails" placeholder="Ex: Especializado em desenvolvimento web, trabalha em uma loja." rows="2"></textarea>
-                </div>
-                <div id="suggestedProfessionSection" class="input-group" style="display: none;">
-                    <label for="professionSuggestionContext">Contexto para sugestão de profissão:</label><textarea id="professionSuggestionContext" placeholder="Ex: Precisa ter acesso a eventos de tecnologia." rows="2"></textarea>
-                </div>
-            </div>
-
-            <div class="section digital-only-item">
-                <h2>7. Credenciais Digitais</h2>
-                <p class="info-text">Sugestões de e-mail e contas vinculadas para aumentar a verossimilhança.</p>
-                <label>Deseja que a IA sugira um e-mail principal?</label>
-                <div class="radio-group">
-                    <input type="radio" id="digitalCredentialsGenerateYes" name="digitalCredentialsGenerate" value="Sim" checked><label for="digitalCredentialsGenerateYes">Sim</label>
-                    <input type="radio" id="digitalCredentialsGenerateNo" name="digitalCredentialsGenerate" value="Não"><label for="digitalCredentialsGenerateNo">Não preciso</label>
-                </div>
-                <div id="digitalCredentialsDetails" class="input-group">
-                    <label>Preferência para o e-mail:</label>
-                    <select id="emailPreferenceSelect"><option value="">Selecione</option><option value="Baseado no nome do perfil">Baseado no nome</option><option value="Com ano de nascimento">Com ano de nascimento</option><option value="Com hobby/interesse">Com hobby</option><option value="Outro">Outro</option></select>
-                    <input type="text" id="emailPreferenceOther" placeholder="Especifique outra preferência" style="display: none;">
                 </div>
             </div>
             
             <div class="section">
-                <h2>8. Observações Adicionais</h2>
-                <label for="additionalNotes">Incluir detalhes específicos (sotaque, vícios de fala, manias, etc.):</label>
-                <textarea id="additionalNotes" rows="3"></textarea>
+                <h2>4. Contexto da Operação</h2>
+                <label for="targetGroupSelect">Grupo ou indivíduo alvo da investigação:</label>
+                <select id="targetGroupSelect">
+                    <option value="">Selecione uma opção</option><option value="Tráfico de Drogas">Tráfico de Drogas</option><option value="Estelionato / Fraudes Digitais">Estelionato / Fraudes Digitais</option><option value="Facção Criminosa">Facção Criminosa</option><option value="Grupos Radicalizados / Extremistas">Grupos Radicalizados / Extremistas</option><option value="Milícia">Milícia</option><option value="Outro">Outro (especificar)</option>
+                </select>
+                <input type="text" id="targetGroupOther" placeholder="Especifique o alvo da investigação" style="display: none;">
+
+                <label for="operationObjectiveSelect">Objetivo da Operação:</label>
+                <select id="operationObjectiveSelect">
+                    <option value="">Selecione uma opção</option><option value="Coleta de Inteligência (Informações Gerais)">Coleta de Inteligência (Informações Gerais)</option><option value="Identificação de Membros e Hierarquia">Identificação de Membros e Hierarquia</option><option value="Mapeamento de Atividades Ilícitas">Mapeamento de Atividades Ilícitas</option><option value="Levantamento de Provas Materiais">Levantamento de Provas Materiais</option><option value="Estabelecimento de Relação de Confiança">Estabelecimento de Relação de Confiança</option><option value="Outro">Outro (especificar)</option>
+                </select>
+                <input type="text" id="operationObjectiveOther" placeholder="Especifique o objetivo da operação" style="display: none;">
             </div>
 
             <div class="section">
-                <h2>9. História de Cobertura</h2>
-                <label>Deseja que a IA crie a história ou você fornecerá?</label>
-                <div class="radio-group">
-                    <input type="radio" id="coverStoryOptionGenerate" name="coverStoryOption" value="gerar" checked><label for="coverStoryOptionGenerate">Gerar história</label>
-                    <input type="radio" id="coverStoryOptionProvide" name="coverStoryOption" value="fornecer"><label for="coverStoryOptionProvide">Fornecer história</label>
+                <h2>5. Ocupação e Detalhes Adicionais</h2>
+                <label for="knownProfessionSelect">Profissão/Ocupação:</label>
+                <select id="knownProfessionSelect">
+                    <option value="">Selecione uma opção</option><option value="Estudante">Estudante</option><option value="Profissional de TI / Desenvolvedor">Profissional de TI / Desenvolvedor</option><option value="Vendedor / Comerciante">Vendedor / Comerciante</option><option value="Motorista de Aplicativo / Entregador">Motorista de Aplicativo / Entregador</option><option value="Profissional Liberal (Advogado, Contador, etc.)">Profissional Liberal (Advogado, Contador, etc.)</option><option value="Desempregado">Desempregado</option><option value="Outro">Outro (especificar)</option>
+                </select>
+                <input type="text" id="knownProfessionInput" placeholder="Especifique a profissão/ocupação" style="display: none;">
+                
+                <label for="additionalNotes">Observações (sotaque, vícios, manias, etc.):</label>
+                <textarea id="additionalNotes" rows="3"></textarea>
+            </div>
+            
+            <div class="section">
+                <h2>6. História de Cobertura</h2>
+                 <div class="radio-group">
+                    <input type="radio" id="coverStoryOptionGenerate" name="coverStoryOption" value="gerar" checked><label for="coverStoryOptionGenerate">Gerar história de cobertura</label>
+                    <input type="radio" id="coverStoryOptionProvide" name="coverStoryOption" value="fornecer"><label for="coverStoryOptionProvide">Fornecer história de cobertura</label>
                 </div>
                 <textarea id="coverStoryInput" rows="4" placeholder="Descreva a história de cobertura aqui..." style="display: none;"></textarea>
             </div>
+
+            <div class="section">
+                <h2>7. Geração com IA</h2>
+                <p class="info-text">Para gerar o perfil, insira sua chave de API do Google AI Studio. A geração é feita diretamente na página.</p>
+                <label for="geminiApiKey">Sua Chave de API do Gemini (Obrigatório)</label>
+                <input type="password" id="geminiApiKey" placeholder="Cole sua chave de API aqui" required>
+                <p class="info-text" style="margin-top: 1rem;">Você pode obter uma chave de API gratuitamente no <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio</a>.</p>
+                
+                <div class="terms-acceptance">
+                    <div class="terms-checkbox-group">
+                        <input type="checkbox" id="termsCheckbox" name="termsCheckbox">
+                        <label for="termsCheckbox">Eu li e aceito os termos de uso.</label>
+                    </div>
+                    <button type="button" id="openTermsBtn" class="link-button">Ler os Termos</button>
+                </div>
+            </div>
             
-            <button type="submit">Gerar Código do Perfil</button>
+            <button type="submit" id="submitBtn" disabled>Gerar Dossiê com IA</button>
         </form>
 
-        <div id="outputPrompt"></div> 
-
-        <button id="copyButton" style="display: none;">Copiar Código do Perfil</button>
-        <div class="ia-buttons-container" style="display: none;">
-            <button class="chatgpt-btn" onclick="window.open('https://chatgpt.com/', '_blank')">Abrir ChatGPT</button>
-            <button class="gemini-btn" onclick="window.open('https://gemini.google.com/', '_blank')">Abrir Gemini</button>
-            <button class="copilot-btn" onclick="window.open('https://copilot.microsoft.com/', '_blank')">Abrir Copilot</button>
+        <div id="outputContainer" style="display: none; margin-top: 2rem;" class="section">
+            <h2>Dossiê Gerado</h2>
+            <div id="apiResult"></div>
+            <div class="output-actions">
+                 <button id="saveProfileButton" style="display: none;"><i class="fa-solid fa-save"></i> Salvar Perfil (.txt)</button>
+                 <button id="copyMarkdownButton" style="display: none;"><i class="fa-solid fa-clipboard"></i> Copiar como Markdown</button>
+            </div>
         </div>
-    </div>
 
-    <div class="footer"> Aplicação desenvolvida por Pedro Henrique, 12º S Inv, COMBATE AO CRIME ORGANIZADO. </div>
-    <div id="socketPuppetModal" class="modal"> <div class="modal-content"> <span class="close-button">&times;</span> <h2>O que é a Técnica "Socket Puppet"?</h2> <p>A técnica <strong>"Socket Puppet"</strong> é a criação de uma <strong>identidade falsa</strong> para interagir em ambientes digitais ou em campo, sem revelar a identidade real do agente.</p> <p>O objetivo é se infiltrar, coletar dados e construir relações de confiança com alvos. Para funcionar, o perfil precisa ser <strong>extremamente verossímil e consistente</strong>. Esta ferramenta ajuda a criar todos os elementos dessa identidade de forma organizada e estratégica.</p> </div> </div>
+        <div class="voltar-container">
+            <a href="https://investigadigital.com/" class="btn-voltar">← Voltar à Página Inicial</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="year"></span> Investiga Digital – Desenvolvido por Pedro Henrique.</p>
+            <div class="security-seals">
+                <i class="fa-solid fa-shield-halved" title="Site Seguro (SSL)"></i>
+                <i class="fa-solid fa-lock" title="Conexão Segura"></i>
+            </div>
+        </div>
+    </footer>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // --- DOM Elements ---
         const form = document.getElementById('profileForm');
-        const outputPromptDiv = document.getElementById('outputPrompt');
-        const copyButton = document.getElementById('copyButton');
-        const iaButtonsContainer = document.querySelector('.ia-buttons-container');
+        const outputContainer = document.getElementById('outputContainer');
         const termsModal = document.getElementById('termsOfUseModal');
         const acceptTermsBtn = document.getElementById('acceptTermsBtn');
-        const mainContainer = document.querySelector('.container');
-        const socketPuppetModal = document.getElementById('socketPuppetModal');
-        const openExplanationModalBtn = document.getElementById('openExplanationModal');
-        const closeExplanationModalBtn = socketPuppetModal.querySelector('.close-button');
-        const stateSelect = document.getElementById('stateSelect');
-        const cityContainer = document.getElementById('cityContainer');
-        const citySelect = document.getElementById('citySelect');
-        const regionContainer = document.getElementById('regionContainer');
+        const openTermsBtn = document.getElementById('openTermsBtn');
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const submitBtn = document.getElementById('submitBtn');
+        const apiResultDiv = document.getElementById('apiResult');
+        const digitalPresenceSection = document.getElementById('digitalPresenceSection');
         const regionSelect = document.getElementById('regionSelect');
+        const cityInput = document.getElementById('cityInput');
+        const saveProfileButton = document.getElementById('saveProfileButton');
+        const copyMarkdownButton = document.getElementById('copyMarkdownButton');
+        
+        let rawMarkdownResponse = '';
+
+        const capitalRegions = {
+            'São Paulo': ['Zona Leste', 'Zona Sul', 'Zona Oeste', 'Zona Norte', 'Centro', 'ABC Paulista'],
+            'Rio de Janeiro': ['Zona Sul', 'Zona Norte', 'Zona Oeste (Barra, Recreio, etc.)', 'Centro', 'Baixada Fluminense'],
+            'Brasília': ['Plano Piloto', 'Taguatinga', 'Ceilândia', 'Guará', 'Águas Claras'],
+            'Salvador': ['Centro', 'Orla Atlântica', 'Cidade Baixa', 'Subúrbio Ferroviário'],
+            'Belo Horizonte': ['Centro-Sul', 'Pampulha', 'Venda Nova', 'Barreiro']
+        };
+
+        // --- Event Listeners ---
+        openTermsBtn.addEventListener('click', () => {
+            if (termsModal) termsModal.style.display = 'block';
+        });
 
         acceptTermsBtn.addEventListener('click', () => {
             if (termsModal) termsModal.style.display = 'none';
-            if (mainContainer) mainContainer.style.display = 'block';
+            termsCheckbox.checked = true;
+            termsCheckbox.dispatchEvent(new Event('change'));
         });
-        openExplanationModalBtn.onclick = () => socketPuppetModal.style.display = 'block';
-        closeExplanationModalBtn.onclick = () => socketPuppetModal.style.display = 'none';
-        window.onclick = (event) => { if (event.target == socketPuppetModal) socketPuppetModal.style.display = 'none'; };
+
+        termsCheckbox.addEventListener('change', () => {
+            submitBtn.disabled = !termsCheckbox.checked;
+        });
         
-        const digitalOnlyItems = document.querySelectorAll('.digital-only-item');
-        function toggleProfileTypeFields() {
-            const profileType = document.querySelector('input[name="profileType"]:checked').value;
-            digitalOnlyItems.forEach(item => item.style.display = (profileType === 'mission') ? 'none' : 'block');
-        }
-        document.querySelectorAll('input[name="profileType"]').forEach(r => r.addEventListener('change', toggleProfileTypeFields));
+        document.querySelector('input[name="profileType"]').addEventListener('change', (e) => {
+            digitalPresenceSection.style.display = e.target.value === 'internet' ? 'block' : 'none';
+        });
+
+        cityInput.addEventListener('input', () => {
+            const city = cityInput.value.trim();
+            const regions = capitalRegions[city];
+            regionSelect.innerHTML = '<option value="">Selecione a Região/Área</option>';
+            if (regions) {
+                regions.forEach(region => {
+                    const option = new Option(region, region);
+                    regionSelect.add(option);
+                });
+                regionSelect.style.display = 'block';
+            } else {
+                regionSelect.style.display = 'none';
+            }
+        });
         
+        saveProfileButton.addEventListener('click', () => {
+            const blob = new Blob([apiResultDiv.innerText], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `perfil_socketpuppet_${Date.now()}.txt`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+        
+        copyMarkdownButton.addEventListener('click', () => {
+            navigator.clipboard.writeText(rawMarkdownResponse).then(() => {
+                const originalText = copyMarkdownButton.innerHTML;
+                copyMarkdownButton.innerHTML = 'Copiado!';
+                setTimeout(() => { copyMarkdownButton.innerHTML = originalText; }, 1500);
+            }).catch(err => console.error('Erro ao copiar markdown: ', err));
+        });
+
+        // --- Setup Functions ---
         function setupToggle(radioGroupName, targetElementId, showWhenValueIs) {
-             const radios = document.querySelectorAll(`input[name="${radioGroupName}"]`);
-             const targetElement = document.getElementById(targetElementId);
-             if (!targetElement) return;
-             const updateVisibility = () => {
+            const radios = document.querySelectorAll(`input[name="${radioGroupName}"]`);
+            const targetElement = document.getElementById(targetElementId);
+            if (!targetElement) return;
+            const updateVisibility = () => {
                 const checkedRadio = document.querySelector(`input[name="${radioGroupName}"]:checked`);
                 targetElement.style.display = (checkedRadio && checkedRadio.value === showWhenValueIs) ? 'block' : 'none';
-             };
-             radios.forEach(radio => radio.addEventListener('change', updateVisibility));
-             updateVisibility();
+            };
+            radios.forEach(radio => radio.addEventListener('change', updateVisibility));
+            updateVisibility();
         }
-
-        setupToggle('charOption', 'physicalCharacteristicsSection', 'fornecer');
-        setupToggle('docOption', 'providedDocsSection', 'fornecer_docs');
-        setupToggle('commStyleOption', 'communicationStyleSection', 'fornecer');
-        setupToggle('slangOption', 'typicalSlangsSection', 'fornecer');
-        setupToggle('hobbiesOption', 'hobbiesInterestsSection', 'fornecer');
-        setupToggle('dressStyleOption', 'dressStyleSection', 'fornecer');
-        setupToggle('preExistingData', 'providedInvestigatorData', 'Sim');
-        setupToggle('nationality', 'otherNationality', 'Outro');
-        setupToggle('targetProfessionKnowledge', 'knownProfessionSection', 'known');
-        setupToggle('targetProfessionKnowledge', 'suggestedProfessionSection', 'suggest');
-        setupToggle('digitalCredentialsGenerate', 'digitalCredentialsDetails', 'Sim');
-        setupToggle('coverStoryOption', 'coverStoryInput', 'fornecer');
 
         function setupSelectOtherToggle(selectId, otherInputId) {
             const select = document.getElementById(selectId);
@@ -528,192 +622,290 @@
             update();
         }
         
-        setupSelectOtherToggle('genderSelect', 'genderOther');
-        setupSelectOtherToggle('hairColorSelect', 'hairColorOther');
-        setupSelectOtherToggle('eyeColorSelect', 'eyeColorOther');
-        setupSelectOtherToggle('communicationStyleSelect', 'communicationStyleOther');
-        setupSelectOtherToggle('citySelect', 'cityOther');
-        setupSelectOtherToggle('regionSelect', 'regionOther');
-        setupSelectOtherToggle('targetGroupSelect', 'targetGroupOther');
-        setupSelectOtherToggle('operationObjectiveSelect', 'operationObjectiveOther');
-        setupSelectOtherToggle('initialApproachStrategySelect', 'initialApproachStrategyOther');
-        setupSelectOtherToggle('politicalPartySelect', 'politicalPartyOther');
-        setupSelectOtherToggle('footballTeamSelect', 'footballTeamOther');
-        setupSelectOtherToggle('emailPreferenceSelect', 'emailPreferenceOther');
-
-        document.getElementById('socialOther').addEventListener('change', function() {
-            const show = this.checked;
-            document.getElementById('otherSocialMedia').style.display = show ? 'block' : 'none';
-            document.getElementById('otherSocialMediaRequirements').style.display = show ? 'block' : 'none';
-        });
-
-        const stateCities = {
-            'SP': ['São Paulo (Capital)', 'Guarulhos', 'Campinas', 'São Bernardo do Campo', 'Santo André', 'Osasco', 'São José dos Campos', 'Ribeirão Preto', 'Sorocaba', 'Santos', 'Baixada Santista (Outra)', 'Interior (Outra)'],
-            'RJ': ['Rio de Janeiro (Capital)', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu', 'Niterói', 'Belford Roxo', 'Campos dos Goytacazes', 'Petrópolis', 'Volta Redonda', 'Região dos Lagos (Outra)'],
-            'MG': ['Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim', 'Montes Claros'], 'BA': ['Salvador', 'Feira de Santana', 'Vitória da Conquista'], 'PR': ['Curitiba', 'Londrina', 'Maringá'], 'RS': ['Porto Alegre', 'Caxias do Sul', 'Canoas'], 'SC': ['Joinville', 'Florianópolis', 'Blumenau'], 'PE': ['Recife', 'Jaboatão dos Guararapes', 'Olinda'], 'CE': ['Fortaleza', 'Caucaia', 'Juazeiro do Norte'], 'GO': ['Goiânia', 'Aparecida de Goiânia', 'Anápolis'], 'DF': ['Brasília (Plano Piloto e RAs)'], 'ES': ['Vila Velha', 'Serra', 'Cariacica', 'Vitória'], 'AC': ['Rio Branco', 'Cruzeiro do Sul'], 'AL': ['Maceió', 'Arapiraca'], 'AP': ['Macapá'], 'AM': ['Manaus'], 'MA': ['São Luís', 'Imperatriz'], 'MT': ['Cuiabá'], 'MS': ['Campo Grande'], 'PA': ['Belém', 'Ananindeua'], 'PB': ['João Pessoa', 'Campina Grande'], 'PI': ['Teresina'], 'RN': ['Natal', 'Mossoró'], 'RO': ['Porto Velho'], 'RR': ['Boa Vista'], 'SE': ['Aracaju'], 'TO': ['Palmas']
-        };
-        const capitalRegions = {
-            'São Paulo (Capital)': ['Zona Leste', 'Zona Sul', 'Zona Oeste', 'Zona Norte', 'Centro', 'ABC Paulista'],
-            'Rio de Janeiro (Capital)': ['Zona Sul', 'Zona Norte', 'Zona Oeste (Barra, Recreio, etc.)', 'Centro', 'Baixada Fluminense'],
-            'Brasília (Plano Piloto e RAs)': ['Plano Piloto', 'Taguatinga', 'Ceilândia', 'Guará', 'Águas Claras']
-        };
-
-        stateSelect.addEventListener('change', function() {
-            const selectedStateUF = this.value;
-            citySelect.innerHTML = ''; cityContainer.style.display = 'none';
-            regionSelect.innerHTML = ''; regionContainer.style.display = 'none';
-            if (!selectedStateUF) return;
-            const cities = stateCities[selectedStateUF] || [];
-            citySelect.innerHTML = '<option value="">Selecione a Cidade/Região</option>';
-            citySelect.add(new Option('Aleatório (deixar para a IA)', 'Aleatório'));
-            cities.forEach(city => citySelect.add(new Option(city, city)));
-            citySelect.add(new Option('Outra (digitar)', 'Outro'));
-            cityContainer.style.display = 'block';
-        });
-
-        citySelect.addEventListener('change', function() {
-            const selectedCity = this.value;
-            regionSelect.innerHTML = ''; regionContainer.style.display = 'none';
-            if (!selectedCity) return;
-            const regions = capitalRegions[selectedCity];
-            if (regions) {
-                regionSelect.innerHTML = '<option value="">Selecione a Região/Área</option>';
-                regions.forEach(region => regionSelect.add(new Option(region, region)));
-                regionSelect.add(new Option('Outra (digitar)', 'Outro'));
-                regionContainer.style.display = 'block';
-            }
-        });
-        
-        toggleProfileTypeFields();
-
-        form.addEventListener('submit', function(event) {
+        // --- Main Form Submission Logic ---
+        form.addEventListener('submit', async function(event) {
             event.preventDefault();
+            
+            const apiKey = document.getElementById('geminiApiKey').value.trim();
+            if (!apiKey) {
+                alert('Por favor, insira sua chave de API do Gemini para gerar o perfil.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> A gerar, por favor aguarde...';
+            outputContainer.style.display = 'block';
+            apiResultDiv.innerHTML = ''; // Clear previous results
+            saveProfileButton.style.display = 'none';
+            copyMarkdownButton.style.display = 'none';
             
             const getById = (id) => document.getElementById(id).value.trim();
             const getRadio = (name) => document.querySelector(`input[name="${name}"]:checked`).value;
+            
             const getSelect = (selectId, otherId) => {
                 const select = document.getElementById(selectId);
-                return select.value.toLowerCase().includes('outro') ? getById(otherId) : select.value;
+                if (!select || !select.value) return '';
+                if (select.value.toLowerCase().includes('outro')) {
+                    const otherInput = document.getElementById(otherId);
+                    return otherInput ? otherInput.value.trim() : '';
+                }
+                return select.value;
             };
+
+            // --- Prompt Assembly ---
+            let prompt = `**Instrução para IA:** Crie um dossiê detalhado e coeso para um perfil fictício (Socket Puppet).
+**Formato de Saída OBRIGATÓRIO (siga à risca):**
+- Use Markdown.
+- Para seções principais, use '###' (ex: ### 👤 DADOS BÁSICOS).
+- Para itens, use um marcador '-' seguido de '**Tópico:**' em negrito (ex: - **Finalidade:** Utilização na internet).
+- Para sub-itens, use UMA indentação (dois espaços) e um marcador '-' (ex:
+  - **Gênero:** Feminino).
+- Use emojis para organizar visualmente.
+
+---
+
+**Parâmetros para Geração:**
+
+`;
             
-            let prompt = "Instruções para o Sherlock AI: Crie um dossiê de perfil fictício completo para uma investigação, seguindo os parâmetros abaixo. Para as redes sociais, o objetivo é sugerir o conteúdo e a configuração, não gerar arquivos.\n\n";
-
+            // Section 1: Basic Info
+            prompt += `### 👤 DADOS BÁSICOS E OBJETIVO\n`;
             const profileType = getRadio('profileType');
-            prompt += `**1. TIPO DE PERFIL:** ${profileType === 'internet' ? 'Para utilização na internet.' : 'Para missão de campo (memorização).'}\n---\n`;
-
+            prompt += `- **Finalidade:** ${profileType === 'internet' ? 'Utilização na internet.' : 'Missão de campo (memorização).'}\n`;
+            
             const charOption = getRadio('charOption');
             if (charOption !== 'nao_preciso') {
-                prompt += `**2. CARACTERÍSTICAS FÍSICAS:**\n`;
-                if (charOption === 'gerar') {
-                    prompt += `  - Instrução: Gerar aleatoriamente.\n`;
+                 if (charOption === 'gerar') {
+                    prompt += `- **Características Físicas:** Gerar aleatoriamente.\n`;
                 } else {
-                    prompt += `  - Gênero: ${getSelect('genderSelect', 'genderOther') || 'Não especificado'}\n`;
-                    prompt += `  - Cor do Cabelo: ${getSelect('hairColorSelect', 'hairColorOther') || 'Não especificado'}\n`;
-                    if (getById('height')) prompt += `  - Altura: ${getById('height')} cm\n`;
-                    if (getById('tattoosPiercings')) prompt += `  - Marcas Distintivas: ${getById('tattoosPiercings')}\n`;
+                    prompt += `- **Gênero (Fornecido):** ${getById('genderSelect') || '[Não especificado]'}\n`;
+                    if (getById('ageInput')) prompt += `- **Idade (Fornecida):** ${getById('ageInput')}\n`;
+                    if (getById('heightInput')) prompt += `- **Altura (Fornecida):** ${getById('heightInput')} cm\n`;
+                    if (getById('weightInput')) prompt += `- **Peso (Fornecido):** ${getById('weightInput')} kg\n`;
+                    const hairColor = getSelect('hairColorSelect', 'hairColorOther');
+                    if (hairColor) prompt += `- **Cor do Cabelo (Fornecida):** ${hairColor}\n`;
+                    const eyeColor = getSelect('eyeColorSelect', 'eyeColorOther');
+                    if (eyeColor) prompt += `- **Cor dos Olhos (Fornecida):** ${eyeColor}\n`;
+                    if (getById('tattoosPiercings')) prompt += `- **Marcas Distintivas (Fornecidas):** ${getById('tattoosPiercings')}\n`;
                 }
             }
 
-            if (getRadio('docOption') === 'fornecer_docs') {
-                prompt += `**3. DOCUMENTOS (se aplicável):**\n`;
-                if (getById('providedRG')) prompt += `  - RG: ${getById('providedRG')}\n`;
-                if (getById('providedCPF')) prompt += `  - CPF: ${getById('providedCPF')}\n`;
+            // Section 2: Persona Details
+            const nationality = getRadio('nationality') === 'Outro' ? getById('otherNationality') : 'Brasileira';
+            prompt += `- **Nacionalidade:** ${nationality}\n`;
+            if (nationality === 'Brasileira') {
+                let location = `${getById('cityInput') || '[Cidade não especificada]'}, ${getById('stateSelect') || '[Estado não especificado]'}`;
+                if (regionSelect.style.display === 'block' && regionSelect.value) {
+                    location += ` - Região: ${regionSelect.value}`;
+                }
+                prompt += `- **Localização:** ${location}\n`;
             }
-            prompt += `---\n`;
-
-            prompt += `**4. NACIONALIDADE E LOCALIZAÇÃO:**\n`;
-            if (getRadio('nationality') === 'Outro') {
-                prompt += `  - Nacionalidade: ${getById('otherNationality') || 'Não especificada'}\n`;
+            const profession = getSelect('knownProfessionSelect', 'knownProfessionInput');
+            prompt += `- **Profissão/Ocupação:** ${profession || '[A ser sugerida pela IA]'}\n\n`;
+            
+            // Section 3: Context
+            prompt += `### 🎯 CONTEXTO OPERACIONAL\n`;
+            const targetGroup = getSelect('targetGroupSelect', 'targetGroupOther');
+            prompt += `- **Alvo da Investigação:** ${targetGroup || '[Não especificado]'}\n`;
+            const operationObjective = getSelect('operationObjectiveSelect', 'operationObjectiveOther');
+            prompt += `- **Objetivo da Operação:** ${operationObjective || '[Não especificado]'}\n\n`;
+            
+            // Section 4: Personality
+            prompt += `### ✨ DETALHES COMPORTAMENTAIS E DE PERSONALIDADE\n`;
+            if (getRadio('hobbiesOption') === 'fornecer') {
+                prompt += `- **Hobbies e Interesses (Fornecidos):** ${getById('hobbiesInterestsInput')}\n`;
             } else {
-                prompt += `  - Nacionalidade: Brasileira\n`;
-                prompt += `  - Estado: ${stateSelect.value || 'Não especificado'}\n`;
-                const city = getSelect('citySelect', 'cityOther');
-                if (city) prompt += `  - Cidade/Região: ${city}\n`;
-                const region = getSelect('regionSelect', 'regionOther');
-                if (region) prompt += `  - Área Específica: ${region}\n`;
+                prompt += `- **Hobbies e Interesses:** Gerar aleatoriamente com base no perfil.\n`;
             }
-            prompt += `---\n`;
 
-            prompt += `**5. PERSONALIDADE E ESTILO:**\n`;
-            if (getRadio('hobbiesOption') === 'fornecer') prompt += `  - Hobbies e Interesses: ${getById('hobbiesInterestsInput')}\n`;
-            else if (getRadio('hobbiesOption') === 'gerar') prompt += `  - Hobbies e Interesses: Gerar aleatoriamente.\n`;
-            const political = getSelect('politicalPartySelect', 'politicalPartyOther');
-            if (political) prompt += `  - Posicionamento Político: ${political}\n`;
-            const team = getSelect('footballTeamSelect', 'footballTeamOther');
-            if (team) prompt += `  - Time de Futebol: ${team}\n`;
-            prompt += `---\n`;
+            const politicalView = getSelect('politicalViewSelect', 'politicalViewOther');
+            if (politicalView) prompt += `- **Viés Político:** ${politicalView}\n`;
+            
+            const footballTeam = getSelect('footballTeamSelect', 'footballTeamOther');
+            if (footballTeam) prompt += `- **Time de Futebol:** ${footballTeam}\n`;
 
-            prompt += `**6. CONTEXTO DA OPERAÇÃO:**\n`;
-            prompt += `  - Alvo: ${getSelect('targetGroupSelect', 'targetGroupOther') || 'Não especificado'}\n`;
-            prompt += `  - Objetivo: ${getSelect('operationObjectiveSelect', 'operationObjectiveOther') || 'Não especificado'}\n`;
+            prompt += `- **Observações Adicionais (manias, sotaque, etc.):** ${getById('additionalNotes') || 'Nenhuma observação específica.'}\n\n`;
+            
+            // Section 5: Backstory
+            prompt += `### 📜 HISTÓRIA DE COBERTURA (BACKSTORY)\n`;
+            if (getRadio('coverStoryOption') === 'gerar') {
+                 prompt += `[A IA deve gerar uma história de cobertura detalhada e coesa, integrando todos os dados acima. A história deve justificar a profissão, localização e o motivo pelo qual o perfil estaria no ambiente de interesse da investigação, tornando a persona crível e minimizando riscos de exposição.]\n\n`;
+            } else {
+                prompt += `- **Base da História (Fornecida):** ${getById('coverStoryInput')}\n [A IA deve expandir e detalhar esta base para criar uma narrativa completa e coesa.]\n\n`;
+            }
+            
+            // Section 6: Digital Presence
             if (profileType === 'internet') {
+                prompt += `### 🌐 SUGESTÕES PARA PRESENÇA DIGITAL\n`;
+                prompt += `- **E-mail:** Gerar sugestão de e-mail usando o provedor: ${getById('emailProviderSelect')}.\n`;
+                if(document.getElementById('suggestPassword').checked) {
+                    prompt += `- **Senha Fictícia:** Gerar uma senha forte para a história de cobertura (NÃO para uso real).\n`;
+                }
+
                 const selectedSocialMedia = Array.from(document.querySelectorAll('input[name="socialMedia"]:checked')).map(cb => cb.value);
                 if (selectedSocialMedia.length > 0) {
-                    prompt += `  - Sugestões para Plataformas Digitais:\n`;
-                    selectedSocialMedia.forEach(media => {
-                        let req = '';
-                        switch(media) {
-                            case 'Facebook': req = ' Sugerir Interesses (filmes, livros, músicas), páginas para curtir, texto para "Sobre" e 3 ideias de posts iniciais.'; break;
-                            case 'Instagram': req = ' Sugerir uma bio curta com emojis, 3 temas para posts e descrever um estilo para a foto de perfil (ex: séria, sorrindo).'; break;
-                            case 'X (Twitter)': req = ' Sugerir uma bio, 3 ideias de tweets iniciais e 5 tipos de contas para seguir.'; break;
-                            case 'TikTok': req = ' Sugerir uma bio e 3 temas ou estilos de vídeos que o perfil poderia criar.'; break;
-                            case 'Telegram': req = ' Sugerir um nome de usuário (@) e uma frase para a bio.'; break;
-                            case 'Discord': req = ' Sugerir um nome de usuário e uma frase para o "Sobre Mim".'; break;
-                            case 'Outros':
-                                req = ` Para "${getById('otherSocialMedia')}", gere: ${getById('otherSocialMediaRequirements') || 'sugestões genéricas.'}`; break;
-                        }
-                        prompt += `    * ${media}:${req}\n`;
-                    });
-                }
-                if (document.getElementById('suggestUsername').checked) {
-                    prompt += `  - Nome de Usuário: Sugira um nome de usuário único e consistente que possa ser usado nas plataformas.\n`;
-                }
-                if (document.getElementById('suggestPassword').checked) {
-                    prompt += `  - Senha: Sugira uma senha forte (mínimo 12 caracteres, com maiúsculas, minúsculas, números e símbolos). IMPORTANTE: Esta senha é para a história de cobertura e NÃO DEVE SER USADA em contas reais por segurança.\n`;
+                     prompt += `- **Perfis para Redes Sociais (${selectedSocialMedia.join(', ')}):** Para cada plataforma selecionada, gere sugestões detalhadas, incluindo nome de usuário, bio, estilo de foto de perfil e 3 ideias de postagens iniciais que reforcem a persona.\n`;
                 }
             }
-            prompt += `---\n`;
-            
-            prompt += `**7. PROFISSÃO:**\n`;
-            if (getRadio('targetProfessionKnowledge') === 'known') {
-                prompt += `  - Profissão: ${getById('knownProfessionInput') || 'Não especificada'}\n`;
-            } else {
-                prompt += `  - Instrução: Sugerir profissão com base no contexto: ${getById('professionSuggestionContext') || 'Nenhum contexto fornecido.'}\n`;
-            }
-            prompt += `---\n`;
 
-            prompt += `**8. HISTÓRIA DE COBERTURA (BACKSTORY):**\n`;
-            if (getRadio('coverStoryOption') === 'gerar') {
-                prompt += `  - Instrução: Gerar uma história de cobertura coesa com todos os dados acima.\n`;
-            } else {
-                prompt += `  - História Fornecida: "${getById('coverStoryInput') || 'Nenhuma.'}" (Aprimorar e integrar com os outros dados).\n`;
-            }
-            prompt += `---\n`;
-            
-            prompt += `**OBJETIVO FINAL:** Com base em todos os dados acima, crie um dossiê completo e coeso para o perfil. Apresente de forma organizada, como um relatório de inteligência, para fácil consulta e memorização pelo agente.\n`;
-
-            outputPromptDiv.textContent = prompt;
-            copyButton.style.display = 'block';
-            iaButtonsContainer.style.display = 'flex'; 
-        });
-
-        copyButton.addEventListener('click', function() {
-            const textToCopy = outputPromptDiv.textContent;
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = textToCopy;
-            tempTextArea.style.position = 'absolute'; tempTextArea.style.left = '-9999px';
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
+            // --- API Call ---
             try {
-                const successful = document.execCommand('copy');
-                alert(successful ? 'Código copiado com sucesso!' : 'Não foi possível copiar o código.');
-            } catch (err) {
-                console.error('Erro ao tentar copiar: ', err);
-                alert('Ocorreu um erro ao copiar.');
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    let errorMsg = `HTTP error! status: ${response.status}`;
+                    try {
+                        const errorData = await response.json();
+                        errorMsg = `Erro da API: ${errorData.error?.message || 'Resposta inválida'}`;
+                    } catch (jsonError) {
+                        // If the response is not JSON, use the raw text.
+                        errorMsg = `Erro da API: ${await response.text()}`;
+                    }
+                    throw new Error(errorMsg);
+                }
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (text) {
+                    rawMarkdownResponse = text;
+                    renderMarkdown(text);
+                } else {
+                    apiResultDiv.textContent = 'A API não retornou um resultado válido.';
+                    console.log('Resposta da API incompleta:', result);
+                }
+            } catch (error) {
+                console.error('Erro ao chamar a API Gemini:', error);
+                let userMessage = `<p style="color: #dc3545;"><strong>Ocorreu um erro ao comunicar com a IA:</strong> ${error.message}.</p>`;
+                if (error.message.includes('API key not valid')) {
+                    userMessage += `<p><strong>Causa provável:</strong> A sua chave de API do Gemini é inválida ou foi introduzida incorretamente.</p>
+                                    <p><strong>Ações recomendadas:</strong></p>
+                                    <ul>
+                                        <li>Verifique se copiou a chave de API completa e sem espaços extra.</li>
+                                        <li>Crie uma nova chave de API no <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio</a>.</li>
+                                    </ul>`;
+                } else {
+                    userMessage += `<p>Por favor, verifique a sua ligação à internet e tente novamente.</p>`;
+                }
+                apiResultDiv.innerHTML = userMessage;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Gerar Dossiê com IA';
             }
-            document.body.removeChild(tempTextArea);
+            
+            saveProfileButton.style.display = 'block';
+            copyMarkdownButton.style.display = 'block';
+            outputContainer.scrollIntoView({ behavior: 'smooth' });
         });
+        
+        // --- Rendering & Utility Functions ---
+        function renderMarkdown(markdown) {
+            const lines = markdown.split('\n');
+            let html = '';
+            let listLevel = -1; // -1 means no list, 0 is root, 2 is one level in, etc.
+
+            function processLine(line) {
+                return line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            }
+
+            lines.forEach(line => {
+                if (line.trim() === '') return;
+
+                const indent = line.search(/\S|$/);
+                const isListItem = line.trim().startsWith('- ');
+
+                if (line.trim().startsWith('### ')) {
+                    // Close any open lists before a new header
+                    while (listLevel >= 0) {
+                        html += '</ul>';
+                        if(listLevel > 0) html += '</li>';
+                        listLevel -= 2;
+                    }
+                    html += `<h4>${processLine(line.trim().substring(4))}</h4>`;
+                    listLevel = -1;
+                    return;
+                }
+
+                if (isListItem) {
+                    // Go shallower
+                    while (indent < listLevel) {
+                        html += '</ul></li>';
+                        listLevel -= 2;
+                    }
+                    // Start new list or go deeper
+                    if (indent > listLevel) {
+                         // remove closing </li> of parent to nest the ul
+                        if(html.endsWith('</li>')) {
+                           html = html.slice(0, -5);
+                        }
+                        html += '<ul>';
+                        listLevel += 2;
+                    }
+                    html += `<li>${processLine(line.trim().substring(2))}</li>`;
+                } else {
+                    // Close any open lists if it's not a list item
+                    while (listLevel >= 0) {
+                        html += '</ul>';
+                         if(listLevel > 0) html += '</li>';
+                        listLevel -= 2;
+                    }
+                    html += `<p>${processLine(line)}</p>`;
+                    listLevel = -1;
+                }
+            });
+
+            // Close any remaining lists
+            while (listLevel >= 0) {
+                html += '</ul>';
+                if(listLevel > 0) html += '</li>';
+                listLevel -= 2;
+            }
+            
+            apiResultDiv.innerHTML = html;
+
+            apiResultDiv.querySelectorAll('h4').forEach(h4 => {
+                const btn = document.createElement('button');
+                btn.className = 'copy-section-btn';
+                btn.innerHTML = '<i class="fa-solid fa-copy"></i> Copiar';
+                btn.onclick = () => {
+                    let contentToCopy = [];
+                    let nextElem = h4.nextElementSibling;
+                    while (nextElem && nextElem.tagName !== 'H4') {
+                        contentToCopy.push(nextElem.innerText);
+                        nextElem = nextElem.nextElementSibling;
+                    }
+                    navigator.clipboard.writeText(h4.innerText + '\n\n' + contentToCopy.join('\n')).then(() => {
+                         const originalText = btn.innerHTML;
+                         btn.innerHTML = 'Copiado!';
+                         setTimeout(() => { btn.innerHTML = originalText; }, 1500);
+                    });
+                };
+                h4.appendChild(btn);
+            });
+        }
+        
+        // --- Initial Page Setup ---
+        setupToggle('charOption', 'physicalCharacteristicsSection', 'fornecer');
+        setupToggle('nationality', 'otherNationality', 'Outro');
+        setupToggle('nationality', 'brazilianLocationSection', 'Brasileira');
+        setupToggle('hobbiesOption', 'hobbiesInterestsInput', 'fornecer');
+        setupToggle('coverStoryOption', 'coverStoryInput', 'fornecer');
+
+        setupSelectOtherToggle('hairColorSelect', 'hairColorOther');
+        setupSelectOtherToggle('eyeColorSelect', 'eyeColorOther');
+        setupSelectOtherToggle('targetGroupSelect', 'targetGroupOther');
+        setupSelectOtherToggle('operationObjectiveSelect', 'operationObjectiveOther');
+        setupSelectOtherToggle('knownProfessionSelect', 'knownProfessionInput');
+        setupSelectOtherToggle('politicalViewSelect', 'politicalViewOther');
+        setupSelectOtherToggle('footballTeamSelect', 'footballTeamOther');
+        
+        document.getElementById('year').textContent = new Date().getFullYear();
     });
     </script>
 </body>
 </html>
+
